@@ -1,0 +1,189 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "Big Data Application\n\n\nBig Data Application is an open project that aims to create a new type of database. It leverages the structure of a relationnal database (implented in C lang) & the great power of computation given by the Apache Hadoop project. The need is to compute big data jobs in a secured and scalable way.\n\n\nContext\n\n\nThis project is developed by Paris Descartes University students through their annual project. Supervised by Dragutin Jatrebic, the students are in charge of searching solutions and implementing them each year. This time (2018), we got a partialy developed project, with some features working, but no documentation nor test cover.\n\n\nObjective\n\n\nIn order to contribute to this project, we are working on three main axes. More details are available by exploring the \nrelational part\n and the \nHadoop part\n\n\nReducing technical debt\n\n\nHas described above, the project came with a huge technical debt:\n\n\n\n\nThe project is poorly documented\n\n\nThe code is very poorly documented\n\n\nNo unit tests to avoid regressions\n\n\nMissing conventions (naming, architecture)\n\n\nWeak execution (multipl segfault and bugs)\n\n\n\n\nOne of the main objectives is to reduce this technical debt. First, we'll explore the project and add a complete documentation. Then, we'll be able to clean details like naming conventions or files architecture. Next, some unit test will be implemented, and thus allow us to fix bugs securely or implement new features.\n\n\nMore details about the relational database software architecture are detailed here\n\n\nAI / Hadoop cluster\n\n\nSince the previous students seems to have implemented the relation part of the database, we'll connect a Cloud Hadoop cluster and execute big data algorithms. The process will also be documented in order to contribute concretely to the global project.\n\n\nDocumentation is available here\n\n\nIndexing\n\n\nWhile the current projects implements some basic relational operations, no index is implemented. We know that those mechanics are an easy way to fasten the executions of queries. Thus, we cannot really consider the final result a real database without indexing the content.\n\n\nDocumentation is available here\n\n\nCurrent stage\n\n\n\n\nExplore the code base and understand it\n\n\nWrite a complete documentation\n\n\nClean the code\n\n\nTest the code\n\n\nImplement new features\n\n\nRun a Hadoop Cluster",
+            "title": "Home"
+        },
+        {
+            "location": "/#big-data-application",
+            "text": "Big Data Application is an open project that aims to create a new type of database. It leverages the structure of a relationnal database (implented in C lang) & the great power of computation given by the Apache Hadoop project. The need is to compute big data jobs in a secured and scalable way.",
+            "title": "Big Data Application"
+        },
+        {
+            "location": "/#context",
+            "text": "This project is developed by Paris Descartes University students through their annual project. Supervised by Dragutin Jatrebic, the students are in charge of searching solutions and implementing them each year. This time (2018), we got a partialy developed project, with some features working, but no documentation nor test cover.",
+            "title": "Context"
+        },
+        {
+            "location": "/#objective",
+            "text": "In order to contribute to this project, we are working on three main axes. More details are available by exploring the  relational part  and the  Hadoop part",
+            "title": "Objective"
+        },
+        {
+            "location": "/#reducing-technical-debt",
+            "text": "Has described above, the project came with a huge technical debt:   The project is poorly documented  The code is very poorly documented  No unit tests to avoid regressions  Missing conventions (naming, architecture)  Weak execution (multipl segfault and bugs)   One of the main objectives is to reduce this technical debt. First, we'll explore the project and add a complete documentation. Then, we'll be able to clean details like naming conventions or files architecture. Next, some unit test will be implemented, and thus allow us to fix bugs securely or implement new features.  More details about the relational database software architecture are detailed here",
+            "title": "Reducing technical debt"
+        },
+        {
+            "location": "/#ai-hadoop-cluster",
+            "text": "Since the previous students seems to have implemented the relation part of the database, we'll connect a Cloud Hadoop cluster and execute big data algorithms. The process will also be documented in order to contribute concretely to the global project.  Documentation is available here",
+            "title": "AI / Hadoop cluster"
+        },
+        {
+            "location": "/#indexing",
+            "text": "While the current projects implements some basic relational operations, no index is implemented. We know that those mechanics are an easy way to fasten the executions of queries. Thus, we cannot really consider the final result a real database without indexing the content.  Documentation is available here",
+            "title": "Indexing"
+        },
+        {
+            "location": "/#current-stage",
+            "text": "Explore the code base and understand it  Write a complete documentation  Clean the code  Test the code  Implement new features  Run a Hadoop Cluster",
+            "title": "Current stage"
+        },
+        {
+            "location": "/hadoop/",
+            "text": "Artificial Intelligence on a Hadoop Cluster",
+            "title": "Hadoop"
+        },
+        {
+            "location": "/hadoop/#artificial-intelligence-on-a-hadoop-cluster",
+            "text": "",
+            "title": "Artificial Intelligence on a Hadoop Cluster"
+        },
+        {
+            "location": "/relational/indexing/",
+            "text": "Indexing",
+            "title": "Indexing"
+        },
+        {
+            "location": "/relational/indexing/#indexing",
+            "text": "",
+            "title": "Indexing"
+        },
+        {
+            "location": "/relational/",
+            "text": "Relational database\n\n\nRelational databases are softwares that allow to store data using relations. They expose to the user many constraints that ensures performance and scalability. The design of those softwares has been exposed in the 70's, and has not really changed since. To understand how most modern RDBMS are implemented, we refered to \nthis book about database management systems\n.\n\n\nDisk Management\n\n\nUsing a DiskManager, modern database systems tend to encapsulate the file system interface into a dedicated structure / class / module. However, it is not the case in the current project. Indeed, the file system interface is called and used in various components:\n\n\n\n\nThe \noutils\n exposes several functions that the programmer may need in different layers of the software. Thus, the file system may be manipulated in several functions\n\n\nThe \nDBWR\n (which seems to stand for \ndatabase writer\n) is the closest component to a Disk Manager. It \nscans\n the database system every 3 seconds in order to persist the modifications on disk\n\n\nThe \nLRUCache\n is more \nmemory management\n oriented, but is calling the file system in several places.\n\n\n\n\nOne way to reduce the technical debt would be to isolate the calls to the file system interface. It would be easier to test how we manage the persistance on disk, and it would be reusable from different components. In practice, we could implement a dedicated structure (DiskManager) in charge of using the file system interface. This structure would keep track of the opened OS files & ensure we are not leaking disk memory.\n\n\nMore informations here\n\n\nBuffer Management\n\n\nThe BufferManager is the core component of modern RDBMS. It's in charge of using the DiskManager & manipulate the memory in order to address the constraints of performance as well as persistance.\n\n\nAgain, the current project does not really separate this concern from others. Memory is allocated and freed in many parts of the code base. However, the \nLRUCache\n seems to implement the main logic of managing the database core data (nodes, DB files, ...). This component can be completed by declaring a structure that would expose methods to manipulate the memory transparently, i.e manipulating DB files with powerful functions, encapsulating lower levels of logic, etc.\n\n\n\n\nLRUCache\n is manipulating \nextensions\n. It seems to be the \npages overflow\n as refered in the book linked at the beggining. But this is not sure.\n\n\n\n\nMore informations here\n\n\nGlobal Manager\n\n\nThe GlobalManager is in charge of exposing what's necessary to the end user. He/She wants to create tables, insert data, update, read it or delete it. The \ntableOperations\n module contains the higher levels of logic, directly exposed to the end user: create, update, delete, insert. Even if those functions seem to be encapsulated into a dedicated module (which should be renamed in order to match some convention), they all rely on lower level components like the file system interface, or memory management functions. Thus, they are hard to test, and hard to upgrade in time. If the DiskManager & the BufferManager are correctly implemented, it should be easy to refactor the \ntableOperations\n module in order to make it use the newly implemented components. It then should be easier to test, since the lower level of abstractions will be tested independantly.\n\n\nMore informations here\n\n\nIndexing\n\n\nMore informations here\n\n\nOther\n\n\nAlgorithms\n\n\nJoin algorithms are written in a dedicated file. However, the code complexity is very high and not documented. We'll be able to reduce the tech debt by making the code easier to understand (e.g using proper var names), and document it.\n\n\nInterface\n\n\nWhile the DBMS exposes a command line interface (CLI), it would be easier to encapsulate those mechanics in a dedicated module. It would be easier to test and easier to read where it's used. It would also be more powerful since it would be reusable, and implementing more complex functions.\n\n\nInstance\n\n\nThe \ninstance\n module is in charge of instanciating a database by allocating the needed memory and initializing the correct variables. This task belongs to the GlobalManager. Also, the \nInterface\n agent would be used in order to display a proper CLI and leaving the manager at its own task.\n\n\nHistroy\n\n\nWhat is a \nhistory\n ???",
+            "title": "Relational"
+        },
+        {
+            "location": "/relational/#relational-database",
+            "text": "Relational databases are softwares that allow to store data using relations. They expose to the user many constraints that ensures performance and scalability. The design of those softwares has been exposed in the 70's, and has not really changed since. To understand how most modern RDBMS are implemented, we refered to  this book about database management systems .",
+            "title": "Relational database"
+        },
+        {
+            "location": "/relational/#disk-management",
+            "text": "Using a DiskManager, modern database systems tend to encapsulate the file system interface into a dedicated structure / class / module. However, it is not the case in the current project. Indeed, the file system interface is called and used in various components:   The  outils  exposes several functions that the programmer may need in different layers of the software. Thus, the file system may be manipulated in several functions  The  DBWR  (which seems to stand for  database writer ) is the closest component to a Disk Manager. It  scans  the database system every 3 seconds in order to persist the modifications on disk  The  LRUCache  is more  memory management  oriented, but is calling the file system in several places.   One way to reduce the technical debt would be to isolate the calls to the file system interface. It would be easier to test how we manage the persistance on disk, and it would be reusable from different components. In practice, we could implement a dedicated structure (DiskManager) in charge of using the file system interface. This structure would keep track of the opened OS files & ensure we are not leaking disk memory.  More informations here",
+            "title": "Disk Management"
+        },
+        {
+            "location": "/relational/#buffer-management",
+            "text": "The BufferManager is the core component of modern RDBMS. It's in charge of using the DiskManager & manipulate the memory in order to address the constraints of performance as well as persistance.  Again, the current project does not really separate this concern from others. Memory is allocated and freed in many parts of the code base. However, the  LRUCache  seems to implement the main logic of managing the database core data (nodes, DB files, ...). This component can be completed by declaring a structure that would expose methods to manipulate the memory transparently, i.e manipulating DB files with powerful functions, encapsulating lower levels of logic, etc.   LRUCache  is manipulating  extensions . It seems to be the  pages overflow  as refered in the book linked at the beggining. But this is not sure.   More informations here",
+            "title": "Buffer Management"
+        },
+        {
+            "location": "/relational/#global-manager",
+            "text": "The GlobalManager is in charge of exposing what's necessary to the end user. He/She wants to create tables, insert data, update, read it or delete it. The  tableOperations  module contains the higher levels of logic, directly exposed to the end user: create, update, delete, insert. Even if those functions seem to be encapsulated into a dedicated module (which should be renamed in order to match some convention), they all rely on lower level components like the file system interface, or memory management functions. Thus, they are hard to test, and hard to upgrade in time. If the DiskManager & the BufferManager are correctly implemented, it should be easy to refactor the  tableOperations  module in order to make it use the newly implemented components. It then should be easier to test, since the lower level of abstractions will be tested independantly.  More informations here",
+            "title": "Global Manager"
+        },
+        {
+            "location": "/relational/#indexing",
+            "text": "More informations here",
+            "title": "Indexing"
+        },
+        {
+            "location": "/relational/#other",
+            "text": "",
+            "title": "Other"
+        },
+        {
+            "location": "/relational/#algorithms",
+            "text": "Join algorithms are written in a dedicated file. However, the code complexity is very high and not documented. We'll be able to reduce the tech debt by making the code easier to understand (e.g using proper var names), and document it.",
+            "title": "Algorithms"
+        },
+        {
+            "location": "/relational/#interface",
+            "text": "While the DBMS exposes a command line interface (CLI), it would be easier to encapsulate those mechanics in a dedicated module. It would be easier to test and easier to read where it's used. It would also be more powerful since it would be reusable, and implementing more complex functions.",
+            "title": "Interface"
+        },
+        {
+            "location": "/relational/#instance",
+            "text": "The  instance  module is in charge of instanciating a database by allocating the needed memory and initializing the correct variables. This task belongs to the GlobalManager. Also, the  Interface  agent would be used in order to display a proper CLI and leaving the manager at its own task.",
+            "title": "Instance"
+        },
+        {
+            "location": "/relational/#histroy",
+            "text": "What is a  history  ???",
+            "title": "Histroy"
+        },
+        {
+            "location": "/relational/disk/",
+            "text": "Disk Management\n\n\nWhy\n\n\nSince databases are meant to store data on a long term, they must implement a persistant layer. This is done storing data on the machine disk. Accessing the disk space is very slow, compared to the random access memory (RAM). That's why we must decouple the logic to persist the data and the logic to manipulate it.\n\n\nHow\n\n\nLogicaly, accessing the file system API is done with several native functions:\n\n\n\n\nfopen\n to open a file, either in RAM or on the disk\n\n\nfread\n to read the content of a file\n\n\nfseek\n to move the cursor position in the file\n\n\nftell\n to get the cursor position in the file\n\n\nfclose\n to close an onpened file in order to avoid memory leak\n\n\n\n\nWhat\n\n\nThe current project uses threads to limit the dependencies those two actions have; it's done in the \ndbwr\n module. This module is started in a dedicated thread using \npthread_create(&threadDbwr, NULL, (void *)*startDbwr, NULL);\n in the \ninstance\n module. This allows the database to write on disk some informations every 3 seconds, without impacting the performances of a query.\n\n\nvoid scan()\n{\n    FILE file = fopen('file.txt');\n    fwrite(\"Hello World\", file);\n    fclose(file);\n}\n\nwhile(1)\n{\n    sleep(3);\n    scan();\n}\n\n\n\n\nNext\n\n\nThe problem is that the file system is not only accessed through the \ndbwr\n module: other functions may call it and considerably slow down the whole software.\n\n\nWe would like to implement a dedicated software layer that would be in charge of exposing functions to call in order to perform actions. The advantage is that we could decouple this module, or decouple the disk access using threads in the single component we describe. The second step would be to refactor the project in order to perform disk actions using this module, instead of directly accessing the file system interface.",
+            "title": "DiskManager"
+        },
+        {
+            "location": "/relational/disk/#disk-management",
+            "text": "",
+            "title": "Disk Management"
+        },
+        {
+            "location": "/relational/disk/#why",
+            "text": "Since databases are meant to store data on a long term, they must implement a persistant layer. This is done storing data on the machine disk. Accessing the disk space is very slow, compared to the random access memory (RAM). That's why we must decouple the logic to persist the data and the logic to manipulate it.",
+            "title": "Why"
+        },
+        {
+            "location": "/relational/disk/#how",
+            "text": "Logicaly, accessing the file system API is done with several native functions:   fopen  to open a file, either in RAM or on the disk  fread  to read the content of a file  fseek  to move the cursor position in the file  ftell  to get the cursor position in the file  fclose  to close an onpened file in order to avoid memory leak",
+            "title": "How"
+        },
+        {
+            "location": "/relational/disk/#what",
+            "text": "The current project uses threads to limit the dependencies those two actions have; it's done in the  dbwr  module. This module is started in a dedicated thread using  pthread_create(&threadDbwr, NULL, (void *)*startDbwr, NULL);  in the  instance  module. This allows the database to write on disk some informations every 3 seconds, without impacting the performances of a query.  void scan()\n{\n    FILE file = fopen('file.txt');\n    fwrite(\"Hello World\", file);\n    fclose(file);\n}\n\nwhile(1)\n{\n    sleep(3);\n    scan();\n}",
+            "title": "What"
+        },
+        {
+            "location": "/relational/disk/#next",
+            "text": "The problem is that the file system is not only accessed through the  dbwr  module: other functions may call it and considerably slow down the whole software.  We would like to implement a dedicated software layer that would be in charge of exposing functions to call in order to perform actions. The advantage is that we could decouple this module, or decouple the disk access using threads in the single component we describe. The second step would be to refactor the project in order to perform disk actions using this module, instead of directly accessing the file system interface.",
+            "title": "Next"
+        },
+        {
+            "location": "/relational/buffer/",
+            "text": "Buffer Management\n\n\nWhy\n\n\nIn order to optimize performances of a database system, the random access memory (R.A.M) is widely used. The idea is to load some data from the computer disk (using the \nDiskManager\n), and manipulate it in memory before writting the result on the disk. Since we split the logic dealing with the disk and the one dealing with the RAM, we can get good speed of execution while ensuring persistance.\n\n\nHow\n\n\nLogicaly, accessing the computer memory is built into most languages. It's abstracted by \nvariables\n, which represent a memory space. Depending on the language implementation, some abstractions may exist like pointers, structures, objects, etc. Since our database is implemented using the C language, those abstractions are \nlow level\n. It means that the developer needs to manipulate the allocated memory carefuly, in order to avoid memory leak.\n\n\nAlso, the project must implement itself some abstractions in order to keep a scalable software architecture. The BufferManager is the main abstraction dealing with memory. This software component (often represented by a structure or a class) is in charge of allocating and manipulating some memory space by exposing functions and types to deal with our data.\n\n\nWhat\n\n\nCurrently, the main module dealing with DBMS abstractions is the LRUCache. It exposes functions to manipulate DB files, add and remove pages overflow. The associated header file (\nLRUCache.h\n) exposes structures that reprensent the database logical entities like nodes and hashes.\n\n\nNext\n\n\nEven if most of the logical components are grouped in the LRUCache module, the memory is widely manipulated outside of it. The manipulated structures are created and freed in pretty much every other module, which complicates the testing and make the whole software more complex.\n\n\nOne again, we would like to isolate the logic of dealing with memory. It means that we would like to create a \nbuffer_pool\n that would store the hole data we need to access rapidly. By encapsulating this structure into a dedicated structure or module, we could manage its life cycle and ensure there are no memory leak. Also, testing the memory management would be easier, thus increasing the global resilience of our database.",
+            "title": "BufferManager"
+        },
+        {
+            "location": "/relational/buffer/#buffer-management",
+            "text": "",
+            "title": "Buffer Management"
+        },
+        {
+            "location": "/relational/buffer/#why",
+            "text": "In order to optimize performances of a database system, the random access memory (R.A.M) is widely used. The idea is to load some data from the computer disk (using the  DiskManager ), and manipulate it in memory before writting the result on the disk. Since we split the logic dealing with the disk and the one dealing with the RAM, we can get good speed of execution while ensuring persistance.",
+            "title": "Why"
+        },
+        {
+            "location": "/relational/buffer/#how",
+            "text": "Logicaly, accessing the computer memory is built into most languages. It's abstracted by  variables , which represent a memory space. Depending on the language implementation, some abstractions may exist like pointers, structures, objects, etc. Since our database is implemented using the C language, those abstractions are  low level . It means that the developer needs to manipulate the allocated memory carefuly, in order to avoid memory leak.  Also, the project must implement itself some abstractions in order to keep a scalable software architecture. The BufferManager is the main abstraction dealing with memory. This software component (often represented by a structure or a class) is in charge of allocating and manipulating some memory space by exposing functions and types to deal with our data.",
+            "title": "How"
+        },
+        {
+            "location": "/relational/buffer/#what",
+            "text": "Currently, the main module dealing with DBMS abstractions is the LRUCache. It exposes functions to manipulate DB files, add and remove pages overflow. The associated header file ( LRUCache.h ) exposes structures that reprensent the database logical entities like nodes and hashes.",
+            "title": "What"
+        },
+        {
+            "location": "/relational/buffer/#next",
+            "text": "Even if most of the logical components are grouped in the LRUCache module, the memory is widely manipulated outside of it. The manipulated structures are created and freed in pretty much every other module, which complicates the testing and make the whole software more complex.  One again, we would like to isolate the logic of dealing with memory. It means that we would like to create a  buffer_pool  that would store the hole data we need to access rapidly. By encapsulating this structure into a dedicated structure or module, we could manage its life cycle and ensure there are no memory leak. Also, testing the memory management would be easier, thus increasing the global resilience of our database.",
+            "title": "Next"
+        },
+        {
+            "location": "/relational/global/",
+            "text": "Global Manager\n\n\nThe global manager is the main component that logical abstracts the internals of a database management system. Instead of directly working with the file system or exposing internal algorithms, this structure (or class) gives higher level methods that directly represent the end user actions like inserting rows, executing a query or creating a table.\n\n\nCurently, this abstraction is not present. The modules under \nParser\n implement the end user actions, but directly accesses lower levels of abstractions (like file system or internal algorithms). A proper way to logicaly communicate with our database would be to expose those functions in a dedicated structure (e.g \ninstance\n module). Since we would have refactored the code base in order to use more powerful components (like the BufferManger or the DiskManager), the resulting functions that effectively manipulate the data would be far less complex than what's currently implemented in the \nParser\n module.\n\n\nHere is an example of GlobalManager implementation\n\n\ntypedef struct GlobalManager\n{\n    DiskManager disk;\n    BufferManager buffer;\n\n    /**\n    * These would be function pointers, to emulate object oriented. It could be independant functions.\n    * /\n    void create_table;\n    void insert_row;\n    void delete_row;\n    ...\n\n    void execute_query; // Call Parser just for parsing\n\n} GlobalManager;",
+            "title": "GlobalManager"
+        },
+        {
+            "location": "/relational/global/#global-manager",
+            "text": "The global manager is the main component that logical abstracts the internals of a database management system. Instead of directly working with the file system or exposing internal algorithms, this structure (or class) gives higher level methods that directly represent the end user actions like inserting rows, executing a query or creating a table.  Curently, this abstraction is not present. The modules under  Parser  implement the end user actions, but directly accesses lower levels of abstractions (like file system or internal algorithms). A proper way to logicaly communicate with our database would be to expose those functions in a dedicated structure (e.g  instance  module). Since we would have refactored the code base in order to use more powerful components (like the BufferManger or the DiskManager), the resulting functions that effectively manipulate the data would be far less complex than what's currently implemented in the  Parser  module.  Here is an example of GlobalManager implementation  typedef struct GlobalManager\n{\n    DiskManager disk;\n    BufferManager buffer;\n\n    /**\n    * These would be function pointers, to emulate object oriented. It could be independant functions.\n    * /\n    void create_table;\n    void insert_row;\n    void delete_row;\n    ...\n\n    void execute_query; // Call Parser just for parsing\n\n} GlobalManager;",
+            "title": "Global Manager"
+        }
+    ]
+}
