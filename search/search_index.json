@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/",
-            "text": "Big Data Application\n\n\nBig Data Application is an open project that aims to create a new type of database. It leverages the structure of a relationnal database (implented in C lang) & the great power of computation given by the Apache Hadoop project. The need is to compute big data jobs in a secured and scalable way.\n\n\nContext\n\n\nThis project is developed by Paris Descartes University students through their annual project. Supervised by Dragutin Jatrebic, the students are in charge of searching solutions and implementing them each year. This time (2018), we got a partialy developed project, with some features working, but no documentation nor test cover.\n\n\nObjective\n\n\nIn order to contribute to this project, we are working on three main axes. More details are available by exploring the \nrelational part\n and the \nHadoop part\n\n\nReducing technical debt\n\n\nHas described above, the project came with a huge technical debt:\n\n\n\n\nThe project is poorly documented\n\n\nThe code is very poorly documented\n\n\nNo unit tests to avoid regressions\n\n\nMissing conventions (naming, architecture)\n\n\nWeak execution (multipl segfault and bugs)\n\n\n\n\nOne of the main objectives is to reduce this technical debt. First, we'll explore the project and add a complete documentation. Then, we'll be able to clean details like naming conventions or files architecture. Next, some unit test will be implemented, and thus allow us to fix bugs securely or implement new features.\n\n\nMore details about the relational database software architecture are detailed here\n\n\nAI / Hadoop cluster\n\n\nSince the previous students seems to have implemented the relation part of the database, we'll connect a Cloud Hadoop cluster and execute big data algorithms. The process will also be documented in order to contribute concretely to the global project.\n\n\nDocumentation is available here\n\n\nIndexing\n\n\nWhile the current projects implements some basic relational operations, no index is implemented. We know that those mechanics are an easy way to fasten the executions of queries. Thus, we cannot really consider the final result a real database without indexing the content.\n\n\nDocumentation is available here\n\n\nCurrent stage\n\n\n\n\nExplore the code base and understand it\n\n\nWrite a complete documentation\n\n\nClean the code\n\n\nTest the code\n\n\nImplement new features\n\n\nRun a Hadoop Cluster",
+            "text": "Big Data Application\n\n\nBig Data Application is an open project that aims to create a new type of database. It leverages the structure of a relationnal database (implented in C lang) & the great power of computation given by the Apache Hadoop project. The need is to compute big data jobs in a secured and scalable way.\n\n\nContext\n\n\nThis project is developed by Paris Descartes University students through their annual project. Supervised by Dragutin Jatrebic, the students are in charge of searching solutions and implementing them each year. This time (2018), we got a partialy developed project, with some features working, but no documentation nor test cover.\n\n\nObjective\n\n\nIn order to contribute to this project, we are working on three main axes. More details are available by exploring the \nrelational part\n and the \nHadoop part\n.\n\n\n\n\nThis documentation is available in Markdown, linked to the sources. It's also deployed \non Github Pages\n to deliver it to the final client.\n\n\n\n\nReducing technical debt\n\n\nHas described above, the project came with a huge technical debt:\n\n\n\n\nThe project is poorly documented\n\n\nThe code is very poorly documented\n\n\nNo unit tests to avoid regressions\n\n\nMissing conventions (naming, architecture)\n\n\nWeak execution (multipl segfault and bugs)\n\n\n\n\nOne of the main objectives is to reduce this technical debt. First, we'll explore the project and add a complete documentation. Then, we'll be able to clean details like naming conventions or files architecture. Next, some unit test will be implemented, and thus allow us to fix bugs securely or implement new features.\n\n\nMore details about the relational database software architecture are detailed here\n\n\nAI / Hadoop cluster\n\n\nSince the previous students seems to have implemented the relation part of the database, we'll connect a Cloud Hadoop cluster and execute big data algorithms. The process will also be documented in order to contribute concretely to the global project.\n\n\nDocumentation is available here\n\n\nCloud computing\n\n\nBecause of the great power needed to compute a Hadoop cluster, using local machines is good for testing and debuging purposes, but not for actual computations. For years now, several cloud platforms offer the opportunity to automaticaly deploy a cluster. It's already configured to run Hadoop jobs, and even higher level framework to perform AI algorithms. BQL Database project is able to connect to a cloud cluster, using the Java Native Interface and by specifying the cloud cluster address. This allows the user to perform relational actions on his machine or server, while the heavy computations are performed by dynamic clusters, shut down when they are not used anymore.\n\n\nDocumentation is available here\n\n\nIndexing\n\n\nWhile the current projects implements some basic relational operations, no index is implemented. We know that those mechanics are an easy way to fasten the executions of queries. Thus, we cannot really consider the final result a real database without indexing the content.\n\n\nDocumentation is available here\n\n\nCurrent stage\n\n\n\n\nExplore the code base and understand it\n\n\nWrite a complete documentation\n\n\nClean the code\n\n\nTest the code\n\n\nImplement new features\n\n\nRun a Hadoop Cluster",
             "title": "Home"
         },
         {
@@ -17,7 +17,7 @@
         },
         {
             "location": "/#objective",
-            "text": "In order to contribute to this project, we are working on three main axes. More details are available by exploring the  relational part  and the  Hadoop part",
+            "text": "In order to contribute to this project, we are working on three main axes. More details are available by exploring the  relational part  and the  Hadoop part .   This documentation is available in Markdown, linked to the sources. It's also deployed  on Github Pages  to deliver it to the final client.",
             "title": "Objective"
         },
         {
@@ -31,6 +31,11 @@
             "title": "AI / Hadoop cluster"
         },
         {
+            "location": "/#cloud-computing",
+            "text": "Because of the great power needed to compute a Hadoop cluster, using local machines is good for testing and debuging purposes, but not for actual computations. For years now, several cloud platforms offer the opportunity to automaticaly deploy a cluster. It's already configured to run Hadoop jobs, and even higher level framework to perform AI algorithms. BQL Database project is able to connect to a cloud cluster, using the Java Native Interface and by specifying the cloud cluster address. This allows the user to perform relational actions on his machine or server, while the heavy computations are performed by dynamic clusters, shut down when they are not used anymore.  Documentation is available here",
+            "title": "Cloud computing"
+        },
+        {
             "location": "/#indexing",
             "text": "While the current projects implements some basic relational operations, no index is implemented. We know that those mechanics are an easy way to fasten the executions of queries. Thus, we cannot really consider the final result a real database without indexing the content.  Documentation is available here",
             "title": "Indexing"
@@ -39,6 +44,16 @@
             "location": "/#current-stage",
             "text": "Explore the code base and understand it  Write a complete documentation  Clean the code  Test the code  Implement new features  Run a Hadoop Cluster",
             "title": "Current stage"
+        },
+        {
+            "location": "/cloud/",
+            "text": "Deploying a cloud Hadoop Cluster",
+            "title": "Cloud"
+        },
+        {
+            "location": "/cloud/#deploying-a-cloud-hadoop-cluster",
+            "text": "",
+            "title": "Deploying a cloud Hadoop Cluster"
         },
         {
             "location": "/hadoop/",
