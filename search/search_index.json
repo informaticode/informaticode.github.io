@@ -47,13 +47,43 @@
         },
         {
             "location": "/cloud/",
-            "text": "Deploying a cloud Hadoop Cluster",
+            "text": "Deploying a cloud Hadoop Cluster\n\n\nWhat is a cloud provider ?\n\n\nCloud providers are acutal companies that sell services on the web. In practice, the leaders are Microsoft Azure, Amazon Web Services & Google Cloud. They own and manage:\n\n\n\n\nPhysical infrastructures like servers, datacenters, optical fibers, ...\n\n\nLogical infrastructures like HTTP APIs, databases, virtual machines, ...\n\n\n\n\nUsers can access those infrastructures and use them for their own purposes by connecting to the internet and then communicate with them using standard protocols like HTTP. Most of those services are available using standard APIs to setup instances. The resulting product can then be accessed using their respective protocols. For example, an HTTP POST request can be sent to a correct endpoint to launch a Hadoop cluster. The body would contain the configuration like the number and type of nodes. Then, the client could connect to this cluster by making Hadoop request via the TCP/IP adapted format.\n\n\nWhy are cloud providers interesting\n\n\nSetting up a Hadoop cluster is complex:\n\n\n\n\nNeed of multiple machines (expensive)\n\n\nNeed of a good connection in between\n\n\nNeed of setting up complex logical details (master / worker nodes)\n\n\nNeed of managing those machines (maintain, monitor, etc)\n\n\n\n\nCloud providers abstract all those difficulties by exposing only what's interesting to the end user:\n\n\n\n\nWhat power is needed\n\n\nAutomated monitoring / logging\n\n\nAutomated management\n\n\nEasy deployment\n\n\n\n\nBy simply exposing an HTTP API, cloud providers allow us to use simple tools to setup and use a complex Hadoop cluster. Those tools are available in the native POSIX interface using cURL, in most languages, etc. It means that the end user can manage thousands of nodes using the CLI or a web interface.\n\n\nWhat are the cloud providers\n\n\nAs we saw earlier, the three main actors of cloud computing are:\n\n\n\n\nAmazon Web Services (AWS)\n\n\nMicrosoft Azure\n\n\nGoogle Cloud Platform\n\n\n\n\nEach of those three actors expose an appropriate service to start a Hadoop cluster:\n\n\nAmazon Web Services\n\n\nAWS has called it \nElastic Map Reduce\n. It's a service implementing the well known MapReduce pattern. Since the company provides higher levels of abstraction, it allows us to deploy a Hadoop cluster by using their APIs.\n\n\nMicrosoft Azure\n\n\nMicrosoft Azure exposes a service named \nHDInsight\n. In the same way, the cloud providers allows to deploy a Hadoop cluster in a minute using their web interface.\n\n\nGoogle Cloud Platform\n\n\nGoogle's service is \nCloud Dataproc\n. It's also a \nmanaged service\n that automaticaly instanciate a Hadoop instance and monitores it. The results, logs and alerts are available and automated using their associated services like Google BigQuery for example.",
             "title": "Cloud"
         },
         {
             "location": "/cloud/#deploying-a-cloud-hadoop-cluster",
             "text": "",
             "title": "Deploying a cloud Hadoop Cluster"
+        },
+        {
+            "location": "/cloud/#what-is-a-cloud-provider",
+            "text": "Cloud providers are acutal companies that sell services on the web. In practice, the leaders are Microsoft Azure, Amazon Web Services & Google Cloud. They own and manage:   Physical infrastructures like servers, datacenters, optical fibers, ...  Logical infrastructures like HTTP APIs, databases, virtual machines, ...   Users can access those infrastructures and use them for their own purposes by connecting to the internet and then communicate with them using standard protocols like HTTP. Most of those services are available using standard APIs to setup instances. The resulting product can then be accessed using their respective protocols. For example, an HTTP POST request can be sent to a correct endpoint to launch a Hadoop cluster. The body would contain the configuration like the number and type of nodes. Then, the client could connect to this cluster by making Hadoop request via the TCP/IP adapted format.",
+            "title": "What is a cloud provider ?"
+        },
+        {
+            "location": "/cloud/#why-are-cloud-providers-interesting",
+            "text": "Setting up a Hadoop cluster is complex:   Need of multiple machines (expensive)  Need of a good connection in between  Need of setting up complex logical details (master / worker nodes)  Need of managing those machines (maintain, monitor, etc)   Cloud providers abstract all those difficulties by exposing only what's interesting to the end user:   What power is needed  Automated monitoring / logging  Automated management  Easy deployment   By simply exposing an HTTP API, cloud providers allow us to use simple tools to setup and use a complex Hadoop cluster. Those tools are available in the native POSIX interface using cURL, in most languages, etc. It means that the end user can manage thousands of nodes using the CLI or a web interface.",
+            "title": "Why are cloud providers interesting"
+        },
+        {
+            "location": "/cloud/#what-are-the-cloud-providers",
+            "text": "As we saw earlier, the three main actors of cloud computing are:   Amazon Web Services (AWS)  Microsoft Azure  Google Cloud Platform   Each of those three actors expose an appropriate service to start a Hadoop cluster:",
+            "title": "What are the cloud providers"
+        },
+        {
+            "location": "/cloud/#amazon-web-services",
+            "text": "AWS has called it  Elastic Map Reduce . It's a service implementing the well known MapReduce pattern. Since the company provides higher levels of abstraction, it allows us to deploy a Hadoop cluster by using their APIs.",
+            "title": "Amazon Web Services"
+        },
+        {
+            "location": "/cloud/#microsoft-azure",
+            "text": "Microsoft Azure exposes a service named  HDInsight . In the same way, the cloud providers allows to deploy a Hadoop cluster in a minute using their web interface.",
+            "title": "Microsoft Azure"
+        },
+        {
+            "location": "/cloud/#google-cloud-platform",
+            "text": "Google's service is  Cloud Dataproc . It's also a  managed service  that automaticaly instanciate a Hadoop instance and monitores it. The results, logs and alerts are available and automated using their associated services like Google BigQuery for example.",
+            "title": "Google Cloud Platform"
         },
         {
             "location": "/hadoop/",

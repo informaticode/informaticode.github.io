@@ -59,6 +59,16 @@
             
     <li class="toctree-l2"><a href="#deploying-a-cloud-hadoop-cluster">Deploying a cloud Hadoop Cluster</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l3" href="#what-is-a-cloud-provider">What is a cloud provider ?</a></li>
+        
+            <li><a class="toctree-l3" href="#why-are-cloud-providers-interesting">Why are cloud providers interesting</a></li>
+        
+            <li><a class="toctree-l3" href="#what-are-the-cloud-providers">What are the cloud providers</a></li>
+        
+        </ul>
+    
 
     </ul>
 	    </li>
@@ -126,6 +136,43 @@
             <div class="section">
               
                 <h1 id="deploying-a-cloud-hadoop-cluster">Deploying a cloud Hadoop Cluster</h1>
+<h2 id="what-is-a-cloud-provider">What is a cloud provider ?</h2>
+<p>Cloud providers are acutal companies that sell services on the web. In practice, the leaders are Microsoft Azure, Amazon Web Services &amp; Google Cloud. They own and manage:</p>
+<ul>
+<li>Physical infrastructures like servers, datacenters, optical fibers, ...</li>
+<li>Logical infrastructures like HTTP APIs, databases, virtual machines, ...</li>
+</ul>
+<p>Users can access those infrastructures and use them for their own purposes by connecting to the internet and then communicate with them using standard protocols like HTTP. Most of those services are available using standard APIs to setup instances. The resulting product can then be accessed using their respective protocols. For example, an HTTP POST request can be sent to a correct endpoint to launch a Hadoop cluster. The body would contain the configuration like the number and type of nodes. Then, the client could connect to this cluster by making Hadoop request via the TCP/IP adapted format.</p>
+<h2 id="why-are-cloud-providers-interesting">Why are cloud providers interesting</h2>
+<p>Setting up a Hadoop cluster is complex:</p>
+<ul>
+<li>Need of multiple machines (expensive)</li>
+<li>Need of a good connection in between</li>
+<li>Need of setting up complex logical details (master / worker nodes)</li>
+<li>Need of managing those machines (maintain, monitor, etc)</li>
+</ul>
+<p>Cloud providers abstract all those difficulties by exposing only what's interesting to the end user:</p>
+<ul>
+<li>What power is needed</li>
+<li>Automated monitoring / logging</li>
+<li>Automated management</li>
+<li>Easy deployment</li>
+</ul>
+<p>By simply exposing an HTTP API, cloud providers allow us to use simple tools to setup and use a complex Hadoop cluster. Those tools are available in the native POSIX interface using cURL, in most languages, etc. It means that the end user can manage thousands of nodes using the CLI or a web interface.</p>
+<h2 id="what-are-the-cloud-providers">What are the cloud providers</h2>
+<p>As we saw earlier, the three main actors of cloud computing are:</p>
+<ul>
+<li><a href="https://aws.amazon.com">Amazon Web Services (AWS)</a></li>
+<li><a href="https://azure.microsoft.com">Microsoft Azure</a></li>
+<li><a href="https://cloud.google.com">Google Cloud Platform</a></li>
+</ul>
+<p>Each of those three actors expose an appropriate service to start a Hadoop cluster:</p>
+<h3 id="amazon-web-services">Amazon Web Services</h3>
+<p>AWS has called it <a href="https://aws.amazon.com/emr/details/hadoop">Elastic Map Reduce</a>. It's a service implementing the well known MapReduce pattern. Since the company provides higher levels of abstraction, it allows us to deploy a Hadoop cluster by using their APIs.</p>
+<h3 id="microsoft-azure">Microsoft Azure</h3>
+<p>Microsoft Azure exposes a service named <a href="https://azure.microsoft.com/fr-fr/services/hdinsight/">HDInsight</a>. In the same way, the cloud providers allows to deploy a Hadoop cluster in a minute using their web interface.</p>
+<h3 id="google-cloud-platform">Google Cloud Platform</h3>
+<p>Google's service is <a href="https://cloud.google.com/dataproc">Cloud Dataproc</a>. It's also a <em>managed service</em> that automaticaly instanciate a Hadoop instance and monitores it. The results, logs and alerts are available and automated using their associated services like Google BigQuery for example.</p>
               
             </div>
           </div>
