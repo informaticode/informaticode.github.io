@@ -87,13 +87,48 @@
         },
         {
             "location": "/hadoop/",
-            "text": "Artificial Intelligence on a Hadoop Cluster",
+            "text": "Artificial Intelligence on a Hadoop Cluster\n\n\nObjective\n\n\nDeploying a Hadoop cluster is not the only objective of this project. We want to compute something with it. In order to explore the technical details of an actual implementation, a simple algorithm has been developed that can run on a Hadoop cluster of computers.\n\n\n\n\nSince this algorithm doesn't need that much compute power, executing it on a cloud cluster is for demonstration purposes\n\n\n\n\nAdvantage\n\n\nThanks to Java and the portability of the Hadoop program developing Hadoop programs is hardware independant. Thus, executing this algorithm on a local machine or on a cloud cluster if only a line of code away.\n\n\nMore documentation on the cloud computing is available here\n\n\nNa\u00efve Bayes Classification\n\n\nNa\u00efve Bayes Classification is a simple but yet powerful way to classify some objects. It's considered as a supervised machine learning algorithm. Based on the famous Bayes Theorem, it makes the final choice of class using probabilities. It's called \nna\u00efve\n because a strong assumption is made: that the studied variables are independant.\n\n\nHere is a simple but complete article about this algorithm\n\n\nClassifier\n\n\nThe \nClassifier\n is the main class to be executed by Hadoop. It contains the \nmain\n method that is the start of any Java program.\n\n\nInside the \nmain\n method, the whole algorithm is executed. First, some files are loaded as variables. The first is the training set, the other is to write the final results.\n\n\nFile f1=new File(\"~/TrainingData.txt\");\nFile f2=new File(\"~/outnv.txt\");\nBufferedReader fr=new BufferedReader(new FileReader(f1));\nBufferedWriter fw= new BufferedWriter(new FileWriter(f2));\n\n\n\n\nNext, the method will load the data using a simple loop: \nwhile ((line = fr.readLine()) != null)\n. While loading the dataset, the next class to be documented (\nClassification\n) is used as a library, calling static method to compute probabilities.\n\n\nClassification.BuildConditionalProbabilityOutput(Cpo,reducekey);\nClassification.BuildClassOutputTable(Co,reducekey);\n\n\n\n\nOnce the probabilities have been computed, the final ProbabilityTable can be completed using \nClassification.BuildProbabilityTable(Co, Cpo,PTable);\n\n\nFinaly, our algorithm will loop over the training set, in order to compute the output class to attribute to the examples. Again, we call for the \nClassification\n class using its \nGetConditionnalProbability\n to compute the ouput probability and thus determine the associated class. This result is written on disk using \nfw.write(sen.get(l)+\"\\t \\t  \"+reducerOutputkey+\"\\n\");\n\n\nClassification\n\n\nStatic methods\n\n\nThe \nClassification\n class is used as a library. It exposes static methods to be called by the classifier and performs statistical computation in order to isolate what is not part of a Bayes algorithm. Here is the list of methods exposed and their signature.\n\n\nstatic void BuildClassOutputTable(ArrayList<Classification> Co,String reduceKey);\nstatic void BuildConditionalProbabilityOutput(ArrayList<Classification> Cop,String reduceKey);\n\nstatic void BuildProbabilityTable(ArrayList<Classification> Co, ArrayList<Classification> Cop, <Classification> PTable);\n\nstatic double GetConditionnalProbability(String attribute,String Class);\n\n\n\n\nAs we can, see the Bayes theorem is used. First, we build the probabilities of each class, then the conditional probabilities, and finaly build the whol probability table. When we want to compute a probability, we call \nGetConditionnalProbability\n.\n\n\nData structure\n\n\nThe \nClassification\n is also used as a data structure. As we can see in the constructor, it can encapsulate some attributes like the \nreducekey\n.\n\n\npublic Classification(String reducekey,double value) {\n    this.reducekey = reducekey;  // Sunny,yes\n    this.value = value;\n    String[] tmp = reducekey.split(\",\"); \n    this.att = tmp[0];  //  att[0]=Sunny\n    this.Class = tmp[1];//  att[1]=Yes\n}\n\n\n\n\nThus, we can store probabilities using Java polymorphism in the \nClassifier\n. It's easier to manipulate in the rest of the algorithm. In this code sample, we can see the use of Java generics in order to type the ArrayLists content.\n\n\nstatic ArrayList<Classification> Co=new ArrayList<>();  // Class Output\nstatic ArrayList<Classification> Cpo=new ArrayList<>(); // Conditional probability Output\nstatic ArrayList<Classification> PTable = new ArrayList<>();",
             "title": "Hadoop"
         },
         {
             "location": "/hadoop/#artificial-intelligence-on-a-hadoop-cluster",
             "text": "",
             "title": "Artificial Intelligence on a Hadoop Cluster"
+        },
+        {
+            "location": "/hadoop/#objective",
+            "text": "Deploying a Hadoop cluster is not the only objective of this project. We want to compute something with it. In order to explore the technical details of an actual implementation, a simple algorithm has been developed that can run on a Hadoop cluster of computers.   Since this algorithm doesn't need that much compute power, executing it on a cloud cluster is for demonstration purposes",
+            "title": "Objective"
+        },
+        {
+            "location": "/hadoop/#advantage",
+            "text": "Thanks to Java and the portability of the Hadoop program developing Hadoop programs is hardware independant. Thus, executing this algorithm on a local machine or on a cloud cluster if only a line of code away.  More documentation on the cloud computing is available here",
+            "title": "Advantage"
+        },
+        {
+            "location": "/hadoop/#naive-bayes-classification",
+            "text": "Na\u00efve Bayes Classification is a simple but yet powerful way to classify some objects. It's considered as a supervised machine learning algorithm. Based on the famous Bayes Theorem, it makes the final choice of class using probabilities. It's called  na\u00efve  because a strong assumption is made: that the studied variables are independant.  Here is a simple but complete article about this algorithm",
+            "title": "Na\u00efve Bayes Classification"
+        },
+        {
+            "location": "/hadoop/#classifier",
+            "text": "The  Classifier  is the main class to be executed by Hadoop. It contains the  main  method that is the start of any Java program.  Inside the  main  method, the whole algorithm is executed. First, some files are loaded as variables. The first is the training set, the other is to write the final results.  File f1=new File(\"~/TrainingData.txt\");\nFile f2=new File(\"~/outnv.txt\");\nBufferedReader fr=new BufferedReader(new FileReader(f1));\nBufferedWriter fw= new BufferedWriter(new FileWriter(f2));  Next, the method will load the data using a simple loop:  while ((line = fr.readLine()) != null) . While loading the dataset, the next class to be documented ( Classification ) is used as a library, calling static method to compute probabilities.  Classification.BuildConditionalProbabilityOutput(Cpo,reducekey);\nClassification.BuildClassOutputTable(Co,reducekey);  Once the probabilities have been computed, the final ProbabilityTable can be completed using  Classification.BuildProbabilityTable(Co, Cpo,PTable);  Finaly, our algorithm will loop over the training set, in order to compute the output class to attribute to the examples. Again, we call for the  Classification  class using its  GetConditionnalProbability  to compute the ouput probability and thus determine the associated class. This result is written on disk using  fw.write(sen.get(l)+\"\\t \\t  \"+reducerOutputkey+\"\\n\");",
+            "title": "Classifier"
+        },
+        {
+            "location": "/hadoop/#classification",
+            "text": "",
+            "title": "Classification"
+        },
+        {
+            "location": "/hadoop/#static-methods",
+            "text": "The  Classification  class is used as a library. It exposes static methods to be called by the classifier and performs statistical computation in order to isolate what is not part of a Bayes algorithm. Here is the list of methods exposed and their signature.  static void BuildClassOutputTable(ArrayList<Classification> Co,String reduceKey);\nstatic void BuildConditionalProbabilityOutput(ArrayList<Classification> Cop,String reduceKey);\n\nstatic void BuildProbabilityTable(ArrayList<Classification> Co, ArrayList<Classification> Cop, <Classification> PTable);\n\nstatic double GetConditionnalProbability(String attribute,String Class);  As we can, see the Bayes theorem is used. First, we build the probabilities of each class, then the conditional probabilities, and finaly build the whol probability table. When we want to compute a probability, we call  GetConditionnalProbability .",
+            "title": "Static methods"
+        },
+        {
+            "location": "/hadoop/#data-structure",
+            "text": "The  Classification  is also used as a data structure. As we can see in the constructor, it can encapsulate some attributes like the  reducekey .  public Classification(String reducekey,double value) {\n    this.reducekey = reducekey;  // Sunny,yes\n    this.value = value;\n    String[] tmp = reducekey.split(\",\"); \n    this.att = tmp[0];  //  att[0]=Sunny\n    this.Class = tmp[1];//  att[1]=Yes\n}  Thus, we can store probabilities using Java polymorphism in the  Classifier . It's easier to manipulate in the rest of the algorithm. In this code sample, we can see the use of Java generics in order to type the ArrayLists content.  static ArrayList<Classification> Co=new ArrayList<>();  // Class Output\nstatic ArrayList<Classification> Cpo=new ArrayList<>(); // Conditional probability Output\nstatic ArrayList<Classification> PTable = new ArrayList<>();",
+            "title": "Data structure"
         },
         {
             "location": "/relational/indexing/",
@@ -189,6 +224,51 @@
             "location": "/relational/disk/#next",
             "text": "The problem is that the file system is not only accessed through the  dbwr  module: other functions may call it and considerably slow down the whole software.  We would like to implement a dedicated software layer that would be in charge of exposing functions to call in order to perform actions. The advantage is that we could decouple this module, or decouple the disk access using threads in the single component we describe. The second step would be to refactor the project in order to perform disk actions using this module, instead of directly accessing the file system interface.",
             "title": "Next"
+        },
+        {
+            "location": "/documentation/",
+            "text": "Documentation\n\n\nThis documentation is a global & high level description of the current project. Some parts expose the reason behind some choices, and other give some details about the implementation. This page describes how it's compiled and deployed.\n\n\nMarkdown\n\n\nMarkdown is lightweight markup language that allows the reader to read it without having to \ndecode\n it. If interpreted, it displays simple but powerful styles to enhance the reader experience.\n\n\nWhy\n\n\nWe wanted to keep this documentation as close as possible to the code base. This way, we ensure that it evolves easily with it and thus stays up to date. Moreover, it's versionned, bringing all the advantages that versionning has. For example, developers can cooperate on it, and automation can be done using continuous deployment methods.\n\n\nHow\n\n\nBy being lightweight, Markdown allows any developer to update this documentation in coordination with the code. It does not require deep knowledges and can be read without any interpreter for a fast information access. Thus, those pages are kept in the same directory as the code base.\n\n\nWhat\n\n\nIn practice, this documentation has its roots in the \ndoc\n folder. Files are grouped by themes like \nrelational\n, \nhadoop\n or \ncloud\n. During development, anyone can update the related file to add some details, or update them. Then, using the version control system associated with the project, the updates are commited and saved.\n\n\nDeploy\n\n\nFor our client, we wanted to \ndeploy\n this documentation. This means that we watend to make it accessible from the web.\n\n\nMkDocs\n\n\nGithub Pages",
+            "title": "Documentation"
+        },
+        {
+            "location": "/documentation/#documentation",
+            "text": "This documentation is a global & high level description of the current project. Some parts expose the reason behind some choices, and other give some details about the implementation. This page describes how it's compiled and deployed.",
+            "title": "Documentation"
+        },
+        {
+            "location": "/documentation/#markdown",
+            "text": "Markdown is lightweight markup language that allows the reader to read it without having to  decode  it. If interpreted, it displays simple but powerful styles to enhance the reader experience.",
+            "title": "Markdown"
+        },
+        {
+            "location": "/documentation/#why",
+            "text": "We wanted to keep this documentation as close as possible to the code base. This way, we ensure that it evolves easily with it and thus stays up to date. Moreover, it's versionned, bringing all the advantages that versionning has. For example, developers can cooperate on it, and automation can be done using continuous deployment methods.",
+            "title": "Why"
+        },
+        {
+            "location": "/documentation/#how",
+            "text": "By being lightweight, Markdown allows any developer to update this documentation in coordination with the code. It does not require deep knowledges and can be read without any interpreter for a fast information access. Thus, those pages are kept in the same directory as the code base.",
+            "title": "How"
+        },
+        {
+            "location": "/documentation/#what",
+            "text": "In practice, this documentation has its roots in the  doc  folder. Files are grouped by themes like  relational ,  hadoop  or  cloud . During development, anyone can update the related file to add some details, or update them. Then, using the version control system associated with the project, the updates are commited and saved.",
+            "title": "What"
+        },
+        {
+            "location": "/documentation/#deploy",
+            "text": "For our client, we wanted to  deploy  this documentation. This means that we watend to make it accessible from the web.",
+            "title": "Deploy"
+        },
+        {
+            "location": "/documentation/#mkdocs",
+            "text": "",
+            "title": "MkDocs"
+        },
+        {
+            "location": "/documentation/#github-pages",
+            "text": "",
+            "title": "Github Pages"
         },
         {
             "location": "/relational/buffer/",

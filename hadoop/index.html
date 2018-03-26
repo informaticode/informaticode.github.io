@@ -64,6 +64,20 @@
             
     <li class="toctree-l2"><a href="#artificial-intelligence-on-a-hadoop-cluster">Artificial Intelligence on a Hadoop Cluster</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l3" href="#objective">Objective</a></li>
+        
+            <li><a class="toctree-l3" href="#advantage">Advantage</a></li>
+        
+            <li><a class="toctree-l3" href="#naive-bayes-classification">Naïve Bayes Classification</a></li>
+        
+            <li><a class="toctree-l3" href="#classifier">Classifier</a></li>
+        
+            <li><a class="toctree-l3" href="#classification">Classification</a></li>
+        
+        </ul>
+    
 
     </ul>
 	    </li>
@@ -81,6 +95,11 @@
             <li class="toctree-l1">
 		
     <a class="" href="../relational/disk/">DiskManager</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../documentation/">Documentation</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -126,6 +145,61 @@
             <div class="section">
               
                 <h1 id="artificial-intelligence-on-a-hadoop-cluster">Artificial Intelligence on a Hadoop Cluster</h1>
+<h3 id="objective">Objective</h3>
+<p>Deploying a Hadoop cluster is not the only objective of this project. We want to compute something with it. In order to explore the technical details of an actual implementation, a simple algorithm has been developed that can run on a Hadoop cluster of computers.</p>
+<blockquote>
+<p>Since this algorithm doesn't need that much compute power, executing it on a cloud cluster is for demonstration purposes</p>
+</blockquote>
+<h3 id="advantage">Advantage</h3>
+<p>Thanks to Java and the portability of the Hadoop program developing Hadoop programs is hardware independant. Thus, executing this algorithm on a local machine or on a cloud cluster if only a line of code away.</p>
+<p><a href="../cloud/">More documentation on the cloud computing is available here</a></p>
+<h2 id="naive-bayes-classification">Naïve Bayes Classification</h2>
+<p>Naïve Bayes Classification is a simple but yet powerful way to classify some objects. It's considered as a supervised machine learning algorithm. Based on the famous Bayes Theorem, it makes the final choice of class using probabilities. It's called <em>naïve</em> because a strong assumption is made: that the studied variables are independant.</p>
+<p><a href="https://mrmint.fr/naive-bayes-classifier">Here is a simple but complete article about this algorithm</a></p>
+<h2 id="classifier">Classifier</h2>
+<p>The <code>Classifier</code> is the main class to be executed by Hadoop. It contains the <code>main</code> method that is the start of any Java program.</p>
+<p>Inside the <code>main</code> method, the whole algorithm is executed. First, some files are loaded as variables. The first is the training set, the other is to write the final results.</p>
+<pre><code class="Java">File f1=new File(&quot;~/TrainingData.txt&quot;);
+File f2=new File(&quot;~/outnv.txt&quot;);
+BufferedReader fr=new BufferedReader(new FileReader(f1));
+BufferedWriter fw= new BufferedWriter(new FileWriter(f2));
+</code></pre>
+
+<p>Next, the method will load the data using a simple loop: <code>while ((line = fr.readLine()) != null)</code>. While loading the dataset, the next class to be documented (<code>Classification</code>) is used as a library, calling static method to compute probabilities.</p>
+<pre><code class="Java">Classification.BuildConditionalProbabilityOutput(Cpo,reducekey);
+Classification.BuildClassOutputTable(Co,reducekey);
+</code></pre>
+
+<p>Once the probabilities have been computed, the final ProbabilityTable can be completed using <code>Classification.BuildProbabilityTable(Co, Cpo,PTable);</code></p>
+<p>Finaly, our algorithm will loop over the training set, in order to compute the output class to attribute to the examples. Again, we call for the <code>Classification</code> class using its <code>GetConditionnalProbability</code> to compute the ouput probability and thus determine the associated class. This result is written on disk using <code>fw.write(sen.get(l)+"\t \t  "+reducerOutputkey+"\n");</code></p>
+<h2 id="classification">Classification</h2>
+<h3 id="static-methods">Static methods</h3>
+<p>The <code>Classification</code> class is used as a library. It exposes static methods to be called by the classifier and performs statistical computation in order to isolate what is not part of a Bayes algorithm. Here is the list of methods exposed and their signature.</p>
+<pre><code class="Java">static void BuildClassOutputTable(ArrayList&lt;Classification&gt; Co,String reduceKey);
+static void BuildConditionalProbabilityOutput(ArrayList&lt;Classification&gt; Cop,String reduceKey);
+
+static void BuildProbabilityTable(ArrayList&lt;Classification&gt; Co, ArrayList&lt;Classification&gt; Cop, &lt;Classification&gt; PTable);
+
+static double GetConditionnalProbability(String attribute,String Class);
+</code></pre>
+
+<p>As we can, see the Bayes theorem is used. First, we build the probabilities of each class, then the conditional probabilities, and finaly build the whol probability table. When we want to compute a probability, we call <code>GetConditionnalProbability</code>.</p>
+<h3 id="data-structure">Data structure</h3>
+<p>The <code>Classification</code> is also used as a data structure. As we can see in the constructor, it can encapsulate some attributes like the <code>reducekey</code>.</p>
+<pre><code class="Java">public Classification(String reducekey,double value) {
+    this.reducekey = reducekey;  // Sunny,yes
+    this.value = value;
+    String[] tmp = reducekey.split(&quot;,&quot;); 
+    this.att = tmp[0];  //  att[0]=Sunny
+    this.Class = tmp[1];//  att[1]=Yes
+}
+</code></pre>
+
+<p>Thus, we can store probabilities using Java polymorphism in the <code>Classifier</code>. It's easier to manipulate in the rest of the algorithm. In this code sample, we can see the use of Java generics in order to type the ArrayLists content.</p>
+<pre><code class="Java">static ArrayList&lt;Classification&gt; Co=new ArrayList&lt;&gt;();  // Class Output
+static ArrayList&lt;Classification&gt; Cpo=new ArrayList&lt;&gt;(); // Conditional probability Output
+static ArrayList&lt;Classification&gt; PTable = new ArrayList&lt;&gt;();
+</code></pre>
               
             </div>
           </div>
