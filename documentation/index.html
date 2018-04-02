@@ -151,7 +151,15 @@
 <h2 id="deploy">Deploy</h2>
 <p>For our client, we wanted to <em>deploy</em> this documentation. This means that we watend to make it accessible from the web.</p>
 <h3 id="mkdocs">MkDocs</h3>
+<p>MkDocs is a small python package that compiles Markdown syntax to a complete HTML website. This package is perfect to deploy the documentation on the internet.</p>
+<p>To update the documentation, the developer can use a terminal to execute <code>mkdocs build</code>. This command must be executed on the level of the <code>mkdocs.yml</code> file.</p>
+<p>Then, you have to move the content of the resulting <code>site</code> folder in the dedicated <code>informaticode.github.io</code> git repository. When <code>git push</code> is done, Github Pages will automaticaly deploy the website <a href="https://informaticode.github.io/">on the internet</a></p>
+<p><a href="http://www.mkdocs.org/">More details about MkDocs are available here</a></p>
 <h3 id="github-pages">Github Pages</h3>
+<p>Github Pages is a Github product that allows everyone to deploy a static website for free. For one Github account, e.g name <code>informaticode</code>, one repository can be named <code>&lt;account&gt;.github.io</code>, e.g <code>informaticode.github.io</code>.</p>
+<p>By using this convention, you can access the web URL https://\&lt;account>.github.io/, e.g https://informaticode.github.io/ to see the static website.</p>
+<p>This allows to continuously integrate and deploy changes on the website by leveraging the mechanics of Git versionning system.</p>
+<p><a href="https://pages.github.com/">More details about Github Pages are available here</a></p>
               
             </div>
           </div>

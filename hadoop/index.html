@@ -72,9 +72,7 @@
         
             <li><a class="toctree-l3" href="#naive-bayes-classification">Naïve Bayes Classification</a></li>
         
-            <li><a class="toctree-l3" href="#classifier">Classifier</a></li>
-        
-            <li><a class="toctree-l3" href="#classification">Classification</a></li>
+            <li><a class="toctree-l3" href="#components">Components</a></li>
         
         </ul>
     
@@ -145,36 +143,21 @@
             <div class="section">
               
                 <h1 id="artificial-intelligence-on-a-hadoop-cluster">Artificial Intelligence on a Hadoop Cluster</h1>
-<h3 id="objective">Objective</h3>
+<h2 id="objective">Objective</h2>
 <p>Deploying a Hadoop cluster is not the only objective of this project. We want to compute something with it. In order to explore the technical details of an actual implementation, a simple algorithm has been developed that can run on a Hadoop cluster of computers.</p>
 <blockquote>
 <p>Since this algorithm doesn't need that much compute power, executing it on a cloud cluster is for demonstration purposes</p>
 </blockquote>
-<h3 id="advantage">Advantage</h3>
+<h2 id="advantage">Advantage</h2>
 <p>Thanks to Java and the portability of the Hadoop program developing Hadoop programs is hardware independant. Thus, executing this algorithm on a local machine or on a cloud cluster if only a line of code away.</p>
 <p><a href="../cloud/">More documentation on the cloud computing is available here</a></p>
 <h2 id="naive-bayes-classification">Naïve Bayes Classification</h2>
 <p>Naïve Bayes Classification is a simple but yet powerful way to classify some objects. It's considered as a supervised machine learning algorithm. Based on the famous Bayes Theorem, it makes the final choice of class using probabilities. It's called <em>naïve</em> because a strong assumption is made: that the studied variables are independant.</p>
 <p><a href="https://mrmint.fr/naive-bayes-classifier">Here is a simple but complete article about this algorithm</a></p>
-<h2 id="classifier">Classifier</h2>
-<p>The <code>Classifier</code> is the main class to be executed by Hadoop. It contains the <code>main</code> method that is the start of any Java program.</p>
-<p>Inside the <code>main</code> method, the whole algorithm is executed. First, some files are loaded as variables. The first is the training set, the other is to write the final results.</p>
-<pre><code class="Java">File f1=new File(&quot;~/TrainingData.txt&quot;);
-File f2=new File(&quot;~/outnv.txt&quot;);
-BufferedReader fr=new BufferedReader(new FileReader(f1));
-BufferedWriter fw= new BufferedWriter(new FileWriter(f2));
-</code></pre>
-
-<p>Next, the method will load the data using a simple loop: <code>while ((line = fr.readLine()) != null)</code>. While loading the dataset, the next class to be documented (<code>Classification</code>) is used as a library, calling static method to compute probabilities.</p>
-<pre><code class="Java">Classification.BuildConditionalProbabilityOutput(Cpo,reducekey);
-Classification.BuildClassOutputTable(Co,reducekey);
-</code></pre>
-
-<p>Once the probabilities have been computed, the final ProbabilityTable can be completed using <code>Classification.BuildProbabilityTable(Co, Cpo,PTable);</code></p>
-<p>Finaly, our algorithm will loop over the training set, in order to compute the output class to attribute to the examples. Again, we call for the <code>Classification</code> class using its <code>GetConditionnalProbability</code> to compute the ouput probability and thus determine the associated class. This result is written on disk using <code>fw.write(sen.get(l)+"\t \t  "+reducerOutputkey+"\n");</code></p>
-<h2 id="classification">Classification</h2>
-<h3 id="static-methods">Static methods</h3>
-<p>The <code>Classification</code> class is used as a library. It exposes static methods to be called by the classifier and performs statistical computation in order to isolate what is not part of a Bayes algorithm. Here is the list of methods exposed and their signature.</p>
+<h2 id="components">Components</h2>
+<h3 id="classification">Classification</h3>
+<h4 id="static-methods">Static methods</h4>
+<p>The <code>Classification</code> class is used as a library. It exposes static methods to be called by the mapper and reducer classes and performs statistical computation in order to isolate what is not part of a Bayes algorithm. Here is the list of methods exposed and their signature.</p>
 <pre><code class="Java">static void BuildClassOutputTable(ArrayList&lt;Classification&gt; Co,String reduceKey);
 static void BuildConditionalProbabilityOutput(ArrayList&lt;Classification&gt; Cop,String reduceKey);
 
@@ -184,22 +167,68 @@ static double GetConditionnalProbability(String attribute,String Class);
 </code></pre>
 
 <p>As we can, see the Bayes theorem is used. First, we build the probabilities of each class, then the conditional probabilities, and finaly build the whol probability table. When we want to compute a probability, we call <code>GetConditionnalProbability</code>.</p>
-<h3 id="data-structure">Data structure</h3>
+<h4 id="data-structure">Data structure</h4>
 <p>The <code>Classification</code> is also used as a data structure. As we can see in the constructor, it can encapsulate some attributes like the <code>reducekey</code>.</p>
 <pre><code class="Java">public Classification(String reducekey,double value) {
-    this.reducekey = reducekey;  // Sunny,yes
+    this.reducekey = reducekey; // Sunny,yes
     this.value = value;
     String[] tmp = reducekey.split(&quot;,&quot;); 
-    this.att = tmp[0];  //  att[0]=Sunny
-    this.Class = tmp[1];//  att[1]=Yes
+    this.att = tmp[0]; // att[0]=Sunny
+    this.Class = tmp[1]; // att[1]=Yes
 }
 </code></pre>
 
-<p>Thus, we can store probabilities using Java polymorphism in the <code>Classifier</code>. It's easier to manipulate in the rest of the algorithm. In this code sample, we can see the use of Java generics in order to type the ArrayLists content.</p>
-<pre><code class="Java">static ArrayList&lt;Classification&gt; Co=new ArrayList&lt;&gt;();  // Class Output
+<p>Thus, we can store probabilities using Java polymorphism in the mapper and reducer classes. It's easier to manipulate in the rest of the algorithm. In this code sample, we can see the use of Java generics in order to type the ArrayLists content.</p>
+<pre><code class="Java">static ArrayList&lt;Classification&gt; Co=new ArrayList&lt;&gt;(); // Class Output
 static ArrayList&lt;Classification&gt; Cpo=new ArrayList&lt;&gt;(); // Conditional probability Output
 static ArrayList&lt;Classification&gt; PTable = new ArrayList&lt;&gt;();
 </code></pre>
+
+<h3 id="classifier">Classifier</h3>
+<p>The <code>Classifier</code> is the main class to be executed by Hadoop. It contains the <code>main</code> method that is the start of any Java program. This method sets up the context of the algorithm and its high level execution:</p>
+<p>Selecting the data structure to manipulate (see the next section about the <code>Classification</code>)</p>
+<pre><code class="Java">job.setJarByClass(Classifier.class);    
+</code></pre>
+
+<p>Selecting the mapper and reducer classes.</p>
+<pre><code class="Java">job.setMapperClass(NaiveBayesMapper.class);
+job.setReducerClass(NaiveBayesReducer.class);
+</code></pre>
+
+<p>Defining the I/O components. i.e how to read and write data. We can see that the method is chosen (Text), but the files are not yet defined.</p>
+<pre><code class="Java">job.setInputFormatClass(TextInputFormat.class);
+job.setOutputFormatClass(TextOutputFormat.class);
+````
+
+Finaly, we can select the proper files that contain the data to process. The first is the training set, the other is to write the final results.
+
+```Java
+FileInputFormat.addInputPath(job, new Path(args[0]));
+FileOutputFormat.setOutputPath(job, new Path(args[1]));
+</code></pre>
+
+<h3 id="mapreduce">MapReduce</h3>
+<p>Invented by Google, this pattern is an abstraction on how to manipulate data. First, the <em>Map</em> step aims to selecta part of our data to analyse. It can transform this part, but does not aggregate objects. Second, the <em>Reduce</em> step aims to aggregage the results of the <em>Map</em> step, in order to compute the final result.</p>
+<h4 id="mapper">Mapper</h4>
+<p>The mapping is an operation that applies a transformation on a list of objects. This transformation is applied on each object, and returns another list of the same size. This transformation can be a simple selection of a property of each object, but it can also apply a mathematical computation.</p>
+<p>In our algorithm, the mapper is implemented by the <code>NaiveBayesMapper</code> class. By convention (for Hadoop), this class implements only one method called <code>map</code>. We can see that it calls static method from our <em>library</em> named <code>Classification</code>. The <code>Classifier</code> is our manipulated data structure.</p>
+<pre><code class="Java">Classification.BuildConditionalProbabilityOutput(Classifier.Cpo, key);
+Classification.BuildClassOutputTable(Classifier.Co, klass);
+</code></pre>
+
+<blockquote>
+<p>In this concrete example, the mapper maps the dataset to a list of probabilities. These are the intermediate probabilities refered to in the Naive Bayes algorithm.</p>
+</blockquote>
+<h4 id="reducer">Reducer</h4>
+<p>The reducing operation can now aggregage the transformations performed by the mapper. It allows our algorithm to output less values, i.e going through the whole dataset and get a final result.</p>
+<p>In our algorithm, the reducer is implemented by the <code>NaiveBayesReducer</code> class. By convention (for Hadoop), this class implements only one method called <code>reduce</code>. We can see that it calls static methods from our <em>library</em> named <code>Classification</code>. The <code>Classifier</code>is our manipulated data structure.</p>
+<pre><code class="Java">Classification.BuildProbabilityTable(Classifier.Co, Classifier.Cpo, Classifier.PTable);
+posterior = posterior*Classification.GetConditionnalProbability(attributes[j], Classifier.Co.get(i).getclass());
+</code></pre>
+
+<blockquote>
+<p>In this concrete example, the reducer uses the previously mapped probabilities to compute the final table, and thus get the conditional probability. That's the final output of the Naive Bayes algorithm, called the <em>model</em>. This model can be used to classify new objects.</p>
+</blockquote>
               
             </div>
           </div>
