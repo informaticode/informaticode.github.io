@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Relational - BQLDatabase</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Relational";
+    var mkdocs_page_input_path = "relational/index.md";
+    var mkdocs_page_url = "/relational/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> BQLDatabase</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../cloud/">Cloud</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../hadoop/">Hadoop</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../cloud/aws/">Amazon Web Services</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="indexing/">Indexing</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Relational</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#relational-database">Relational database</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#disk-management">Disk Management</a></li>
+        
+            <li><a class="toctree-l3" href="#buffer-management">Buffer Management</a></li>
+        
+            <li><a class="toctree-l3" href="#global-manager">Global Manager</a></li>
+        
+            <li><a class="toctree-l3" href="#indexing">Indexing</a></li>
+        
+            <li><a class="toctree-l3" href="#other">Other</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="disk/">DiskManager</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../documentation/">Documentation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="buffer/">BufferManager</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="global/">GlobalManager</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">BQLDatabase</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Relational</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="relational-database">Relational database</h1>
+<p>Relational databases are softwares that allow to store data using relations. They expose to the user many constraints that ensures performance and scalability. The design of those softwares has been exposed in the 70's, and has not really changed since. To understand how most modern RDBMS are implemented, we refered to <a href="https://www.amazon.com/Database-Management-Systems-Third-Ramakrishnan-ebook/dp/B002K8Q9PA">this book about database management systems</a>.</p>
+<h2 id="disk-management">Disk Management</h2>
+<p>Using a DiskManager, modern database systems tend to encapsulate the file system interface into a dedicated structure / class / module. However, it is not the case in the current project. Indeed, the file system interface is called and used in various components:</p>
+<ul>
+<li>The <code>outils</code> exposes several functions that the programmer may need in different layers of the software. Thus, the file system may be manipulated in several functions</li>
+<li>The <code>DBWR</code> (which seems to stand for <em>database writer</em>) is the closest component to a Disk Manager. It <em>scans</em> the database system every 3 seconds in order to persist the modifications on disk</li>
+<li>The <code>LRUCache</code> is more <em>memory management</em> oriented, but is calling the file system in several places.</li>
+</ul>
+<p>One way to reduce the technical debt would be to isolate the calls to the file system interface. It would be easier to test how we manage the persistance on disk, and it would be reusable from different components. In practice, we could implement a dedicated structure (DiskManager) in charge of using the file system interface. This structure would keep track of the opened OS files &amp; ensure we are not leaking disk memory.</p>
+<p><a href="disk/">More informations here</a></p>
+<h2 id="buffer-management">Buffer Management</h2>
+<p>The BufferManager is the core component of modern RDBMS. It's in charge of using the DiskManager &amp; manipulate the memory in order to address the constraints of performance as well as persistance.</p>
+<p>Again, the current project does not really separate this concern from others. Memory is allocated and freed in many parts of the code base. However, the <code>LRUCache</code> seems to implement the main logic of managing the database core data (nodes, DB files, ...). This component can be completed by declaring a structure that would expose methods to manipulate the memory transparently, i.e manipulating DB files with powerful functions, encapsulating lower levels of logic, etc.</p>
+<blockquote>
+<p><code>LRUCache</code> is manipulating <em>extensions</em>. It seems to be the <em>pages overflow</em> as refered in the book linked at the beggining. But this is not sure.</p>
+</blockquote>
+<p><a href="buffer/">More informations here</a></p>
+<h2 id="global-manager">Global Manager</h2>
+<p>The GlobalManager is in charge of exposing what's necessary to the end user. He/She wants to create tables, insert data, update, read it or delete it. The <code>tableOperations</code> module contains the higher levels of logic, directly exposed to the end user: create, update, delete, insert. Even if those functions seem to be encapsulated into a dedicated module (which should be renamed in order to match some convention), they all rely on lower level components like the file system interface, or memory management functions. Thus, they are hard to test, and hard to upgrade in time. If the DiskManager &amp; the BufferManager are correctly implemented, it should be easy to refactor the <code>tableOperations</code> module in order to make it use the newly implemented components. It then should be easier to test, since the lower level of abstractions will be tested independantly.</p>
+<p><a href="global/">More informations here</a></p>
+<h2 id="indexing">Indexing</h2>
+<p><a href="indexing/">More informations here</a></p>
+<h2 id="other">Other</h2>
+<h3 id="algorithms">Algorithms</h3>
+<p>Join algorithms are written in a dedicated file. However, the code complexity is very high and not documented. We'll be able to reduce the tech debt by making the code easier to understand (e.g using proper var names), and document it.</p>
+<h3 id="interface">Interface</h3>
+<p>While the DBMS exposes a command line interface (CLI), it would be easier to encapsulate those mechanics in a dedicated module. It would be easier to test and easier to read where it's used. It would also be more powerful since it would be reusable, and implementing more complex functions.</p>
+<h3 id="instance">Instance</h3>
+<p>The <code>instance</code> module is in charge of instanciating a database by allocating the needed memory and initializing the correct variables. This task belongs to the GlobalManager. Also, the <code>Interface</code> agent would be used in order to display a proper CLI and leaving the manager at its own task.</p>
+<h3 id="histroy">Histroy</h3>
+<p>What is a <em>history</em> ???</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="disk/" class="btn btn-neutral float-right" title="DiskManager">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="indexing/" class="btn btn-neutral" title="Indexing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="indexing/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="disk/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>

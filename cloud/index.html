@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Cloud - BQLDatabase</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Cloud";
+    var mkdocs_page_input_path = "cloud/index.md";
+    var mkdocs_page_url = "/cloud/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> BQLDatabase</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Cloud</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#deploying-a-cloud-hadoop-cluster">Deploying a cloud Hadoop Cluster</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#what-is-a-cloud-provider">What is a cloud provider ?</a></li>
+        
+            <li><a class="toctree-l3" href="#why-are-cloud-providers-interesting">Why are cloud providers interesting</a></li>
+        
+            <li><a class="toctree-l3" href="#what-are-the-cloud-providers">What are the cloud providers</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../hadoop/">Hadoop</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="aws/">Amazon Web Services</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../relational/indexing/">Indexing</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../relational/">Relational</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../relational/disk/">DiskManager</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../documentation/">Documentation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../relational/buffer/">BufferManager</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../relational/global/">GlobalManager</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">BQLDatabase</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Cloud</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="deploying-a-cloud-hadoop-cluster">Deploying a cloud Hadoop Cluster</h1>
+<h2 id="what-is-a-cloud-provider">What is a cloud provider ?</h2>
+<p>Cloud providers are acutal companies that sell services on the web. In practice, the leaders are Microsoft Azure, Amazon Web Services &amp; Google Cloud. They own and manage:</p>
+<ul>
+<li>Physical infrastructures like servers, datacenters, optical fibers, ...</li>
+<li>Logical infrastructures like HTTP APIs, databases, virtual machines, ...</li>
+</ul>
+<p>Users can access those infrastructures and use them for their own purposes by connecting to the internet and then communicate with them using standard protocols like HTTP. Most of those services are available using standard APIs to setup instances. The resulting product can then be accessed using their respective protocols. For example, an HTTP POST request can be sent to a correct endpoint to launch a Hadoop cluster. The body would contain the configuration like the number and type of nodes. Then, the client could connect to this cluster by making Hadoop request via the TCP/IP adapted format.</p>
+<h2 id="why-are-cloud-providers-interesting">Why are cloud providers interesting</h2>
+<p>Setting up a Hadoop cluster is complex:</p>
+<ul>
+<li>Need of multiple machines (expensive)</li>
+<li>Need of a good connection in between</li>
+<li>Need of setting up complex logical details (master / worker nodes)</li>
+<li>Need of managing those machines (maintain, monitor, etc)</li>
+</ul>
+<p>Cloud providers abstract all those difficulties by exposing only what's interesting to the end user:</p>
+<ul>
+<li>What power is needed</li>
+<li>Automated monitoring / logging</li>
+<li>Automated management</li>
+<li>Easy deployment</li>
+</ul>
+<p>By simply exposing an HTTP API, cloud providers allow us to use simple tools to setup and use a complex Hadoop cluster. Those tools are available in the native POSIX interface using cURL, in most languages, etc. It means that the end user can manage thousands of nodes using the CLI or a web interface.</p>
+<h2 id="what-are-the-cloud-providers">What are the cloud providers</h2>
+<p>As we saw earlier, the three main actors of cloud computing are:</p>
+<ul>
+<li><a href="https://aws.amazon.com">Amazon Web Services (AWS)</a></li>
+<li><a href="https://azure.microsoft.com">Microsoft Azure</a></li>
+<li><a href="https://cloud.google.com">Google Cloud Platform</a></li>
+</ul>
+<p>Each of those three actors expose an appropriate service to start a Hadoop cluster:</p>
+<h3 id="amazon-web-services">Amazon Web Services</h3>
+<p>AWS has called it <a href="https://aws.amazon.com/emr/details/hadoop">Elastic Map Reduce</a>. It's a service implementing the well known MapReduce pattern. Since the company provides higher levels of abstraction, it allows us to deploy a Hadoop cluster by using their APIs.</p>
+<p><a href="aws/">Here are more details on how to deploy a Hadoop Cluster</a></p>
+<h3 id="microsoft-azure">Microsoft Azure</h3>
+<p>Microsoft Azure exposes a service named <a href="https://azure.microsoft.com/fr-fr/services/hdinsight/">HDInsight</a>. In the same way, the cloud providers allows to deploy a Hadoop cluster in a minute using their web interface.</p>
+<h3 id="google-cloud-platform">Google Cloud Platform</h3>
+<p>Google's service is <a href="https://cloud.google.com/dataproc">Cloud Dataproc</a>. It's also a <em>managed service</em> that automaticaly instanciate a Hadoop instance and monitores it. The results, logs and alerts are available and automated using their associated services like Google BigQuery for example.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../hadoop/" class="btn btn-neutral float-right" title="Hadoop">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../hadoop/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>

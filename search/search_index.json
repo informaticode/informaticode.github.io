@@ -1,0 +1,369 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "Big Data Application\n\n\nBig Data Application is an open project that aims to create a new type of database. It leverages the structure of a relationnal database (implented in C lang) & the great power of computation given by the Apache Hadoop project. The need is to compute big data jobs in a secured and scalable way.\n\n\nContext\n\n\nThis project is developed by Paris Descartes University students through their annual project. Supervised by Dragutin Jatrebic, the students are in charge of searching solutions and implementing them each year. This time (2018), we got a partialy developed project, with some features working, but no documentation nor test cover.\n\n\nObjective\n\n\nIn order to contribute to this project, we are working on three main axes. More details are available by exploring the \nrelational part\n and the \nHadoop part\n.\n\n\n\n\nThis documentation is available in Markdown, linked to the sources. It's also deployed \non Github Pages\n to deliver it to the final client.\n\n\n\n\nReducing technical debt\n\n\nHas described above, the project came with a huge technical debt:\n\n\n\n\nThe project is poorly documented\n\n\nThe code is very poorly documented\n\n\nNo unit tests to avoid regressions\n\n\nMissing conventions (naming, architecture)\n\n\nWeak execution (multipl segfault and bugs)\n\n\n\n\nOne of the main objectives is to reduce this technical debt. First, we'll explore the project and add a complete documentation. Then, we'll be able to clean details like naming conventions or files architecture. Next, some unit test will be implemented, and thus allow us to fix bugs securely or implement new features.\n\n\nMore details about the relational database software architecture are detailed here\n\n\nAI / Hadoop cluster\n\n\nSince the previous students seems to have implemented the relation part of the database, we'll connect a Cloud Hadoop cluster and execute big data algorithms. The process will also be documented in order to contribute concretely to the global project.\n\n\nDocumentation is available here\n\n\nCloud computing\n\n\nBecause of the great power needed to compute a Hadoop cluster, using local machines is good for testing and debuging purposes, but not for actual computations. For years now, several cloud platforms offer the opportunity to automaticaly deploy a cluster. It's already configured to run Hadoop jobs, and even higher level framework to perform AI algorithms. BQL Database project is able to connect to a cloud cluster, using the Java Native Interface and by specifying the cloud cluster address. This allows the user to perform relational actions on his machine or server, while the heavy computations are performed by dynamic clusters, shut down when they are not used anymore.\n\n\nDocumentation is available here\n\n\nIndexing\n\n\nWhile the current projects implements some basic relational operations, no index is implemented. We know that those mechanics are an easy way to fasten the executions of queries. Thus, we cannot really consider the final result a real database without indexing the content.\n\n\nDocumentation is available here\n\n\nCurrent stage\n\n\n\n\nExplore the code base and understand it\n\n\nWrite a complete documentation\n\n\nClean the code\n\n\nTest the code\n\n\nImplement new features\n\n\nRun a Hadoop Cluster",
+            "title": "Home"
+        },
+        {
+            "location": "/#big-data-application",
+            "text": "Big Data Application is an open project that aims to create a new type of database. It leverages the structure of a relationnal database (implented in C lang) & the great power of computation given by the Apache Hadoop project. The need is to compute big data jobs in a secured and scalable way.",
+            "title": "Big Data Application"
+        },
+        {
+            "location": "/#context",
+            "text": "This project is developed by Paris Descartes University students through their annual project. Supervised by Dragutin Jatrebic, the students are in charge of searching solutions and implementing them each year. This time (2018), we got a partialy developed project, with some features working, but no documentation nor test cover.",
+            "title": "Context"
+        },
+        {
+            "location": "/#objective",
+            "text": "In order to contribute to this project, we are working on three main axes. More details are available by exploring the  relational part  and the  Hadoop part .   This documentation is available in Markdown, linked to the sources. It's also deployed  on Github Pages  to deliver it to the final client.",
+            "title": "Objective"
+        },
+        {
+            "location": "/#reducing-technical-debt",
+            "text": "Has described above, the project came with a huge technical debt:   The project is poorly documented  The code is very poorly documented  No unit tests to avoid regressions  Missing conventions (naming, architecture)  Weak execution (multipl segfault and bugs)   One of the main objectives is to reduce this technical debt. First, we'll explore the project and add a complete documentation. Then, we'll be able to clean details like naming conventions or files architecture. Next, some unit test will be implemented, and thus allow us to fix bugs securely or implement new features.  More details about the relational database software architecture are detailed here",
+            "title": "Reducing technical debt"
+        },
+        {
+            "location": "/#ai-hadoop-cluster",
+            "text": "Since the previous students seems to have implemented the relation part of the database, we'll connect a Cloud Hadoop cluster and execute big data algorithms. The process will also be documented in order to contribute concretely to the global project.  Documentation is available here",
+            "title": "AI / Hadoop cluster"
+        },
+        {
+            "location": "/#cloud-computing",
+            "text": "Because of the great power needed to compute a Hadoop cluster, using local machines is good for testing and debuging purposes, but not for actual computations. For years now, several cloud platforms offer the opportunity to automaticaly deploy a cluster. It's already configured to run Hadoop jobs, and even higher level framework to perform AI algorithms. BQL Database project is able to connect to a cloud cluster, using the Java Native Interface and by specifying the cloud cluster address. This allows the user to perform relational actions on his machine or server, while the heavy computations are performed by dynamic clusters, shut down when they are not used anymore.  Documentation is available here",
+            "title": "Cloud computing"
+        },
+        {
+            "location": "/#indexing",
+            "text": "While the current projects implements some basic relational operations, no index is implemented. We know that those mechanics are an easy way to fasten the executions of queries. Thus, we cannot really consider the final result a real database without indexing the content.  Documentation is available here",
+            "title": "Indexing"
+        },
+        {
+            "location": "/#current-stage",
+            "text": "Explore the code base and understand it  Write a complete documentation  Clean the code  Test the code  Implement new features  Run a Hadoop Cluster",
+            "title": "Current stage"
+        },
+        {
+            "location": "/cloud/",
+            "text": "Deploying a cloud Hadoop Cluster\n\n\nWhat is a cloud provider ?\n\n\nCloud providers are acutal companies that sell services on the web. In practice, the leaders are Microsoft Azure, Amazon Web Services & Google Cloud. They own and manage:\n\n\n\n\nPhysical infrastructures like servers, datacenters, optical fibers, ...\n\n\nLogical infrastructures like HTTP APIs, databases, virtual machines, ...\n\n\n\n\nUsers can access those infrastructures and use them for their own purposes by connecting to the internet and then communicate with them using standard protocols like HTTP. Most of those services are available using standard APIs to setup instances. The resulting product can then be accessed using their respective protocols. For example, an HTTP POST request can be sent to a correct endpoint to launch a Hadoop cluster. The body would contain the configuration like the number and type of nodes. Then, the client could connect to this cluster by making Hadoop request via the TCP/IP adapted format.\n\n\nWhy are cloud providers interesting\n\n\nSetting up a Hadoop cluster is complex:\n\n\n\n\nNeed of multiple machines (expensive)\n\n\nNeed of a good connection in between\n\n\nNeed of setting up complex logical details (master / worker nodes)\n\n\nNeed of managing those machines (maintain, monitor, etc)\n\n\n\n\nCloud providers abstract all those difficulties by exposing only what's interesting to the end user:\n\n\n\n\nWhat power is needed\n\n\nAutomated monitoring / logging\n\n\nAutomated management\n\n\nEasy deployment\n\n\n\n\nBy simply exposing an HTTP API, cloud providers allow us to use simple tools to setup and use a complex Hadoop cluster. Those tools are available in the native POSIX interface using cURL, in most languages, etc. It means that the end user can manage thousands of nodes using the CLI or a web interface.\n\n\nWhat are the cloud providers\n\n\nAs we saw earlier, the three main actors of cloud computing are:\n\n\n\n\nAmazon Web Services (AWS)\n\n\nMicrosoft Azure\n\n\nGoogle Cloud Platform\n\n\n\n\nEach of those three actors expose an appropriate service to start a Hadoop cluster:\n\n\nAmazon Web Services\n\n\nAWS has called it \nElastic Map Reduce\n. It's a service implementing the well known MapReduce pattern. Since the company provides higher levels of abstraction, it allows us to deploy a Hadoop cluster by using their APIs.\n\n\nHere are more details on how to deploy a Hadoop Cluster\n\n\nMicrosoft Azure\n\n\nMicrosoft Azure exposes a service named \nHDInsight\n. In the same way, the cloud providers allows to deploy a Hadoop cluster in a minute using their web interface.\n\n\nGoogle Cloud Platform\n\n\nGoogle's service is \nCloud Dataproc\n. It's also a \nmanaged service\n that automaticaly instanciate a Hadoop instance and monitores it. The results, logs and alerts are available and automated using their associated services like Google BigQuery for example.",
+            "title": "Cloud"
+        },
+        {
+            "location": "/cloud/#deploying-a-cloud-hadoop-cluster",
+            "text": "",
+            "title": "Deploying a cloud Hadoop Cluster"
+        },
+        {
+            "location": "/cloud/#what-is-a-cloud-provider",
+            "text": "Cloud providers are acutal companies that sell services on the web. In practice, the leaders are Microsoft Azure, Amazon Web Services & Google Cloud. They own and manage:   Physical infrastructures like servers, datacenters, optical fibers, ...  Logical infrastructures like HTTP APIs, databases, virtual machines, ...   Users can access those infrastructures and use them for their own purposes by connecting to the internet and then communicate with them using standard protocols like HTTP. Most of those services are available using standard APIs to setup instances. The resulting product can then be accessed using their respective protocols. For example, an HTTP POST request can be sent to a correct endpoint to launch a Hadoop cluster. The body would contain the configuration like the number and type of nodes. Then, the client could connect to this cluster by making Hadoop request via the TCP/IP adapted format.",
+            "title": "What is a cloud provider ?"
+        },
+        {
+            "location": "/cloud/#why-are-cloud-providers-interesting",
+            "text": "Setting up a Hadoop cluster is complex:   Need of multiple machines (expensive)  Need of a good connection in between  Need of setting up complex logical details (master / worker nodes)  Need of managing those machines (maintain, monitor, etc)   Cloud providers abstract all those difficulties by exposing only what's interesting to the end user:   What power is needed  Automated monitoring / logging  Automated management  Easy deployment   By simply exposing an HTTP API, cloud providers allow us to use simple tools to setup and use a complex Hadoop cluster. Those tools are available in the native POSIX interface using cURL, in most languages, etc. It means that the end user can manage thousands of nodes using the CLI or a web interface.",
+            "title": "Why are cloud providers interesting"
+        },
+        {
+            "location": "/cloud/#what-are-the-cloud-providers",
+            "text": "As we saw earlier, the three main actors of cloud computing are:   Amazon Web Services (AWS)  Microsoft Azure  Google Cloud Platform   Each of those three actors expose an appropriate service to start a Hadoop cluster:",
+            "title": "What are the cloud providers"
+        },
+        {
+            "location": "/cloud/#amazon-web-services",
+            "text": "AWS has called it  Elastic Map Reduce . It's a service implementing the well known MapReduce pattern. Since the company provides higher levels of abstraction, it allows us to deploy a Hadoop cluster by using their APIs.  Here are more details on how to deploy a Hadoop Cluster",
+            "title": "Amazon Web Services"
+        },
+        {
+            "location": "/cloud/#microsoft-azure",
+            "text": "Microsoft Azure exposes a service named  HDInsight . In the same way, the cloud providers allows to deploy a Hadoop cluster in a minute using their web interface.",
+            "title": "Microsoft Azure"
+        },
+        {
+            "location": "/cloud/#google-cloud-platform",
+            "text": "Google's service is  Cloud Dataproc . It's also a  managed service  that automaticaly instanciate a Hadoop instance and monitores it. The results, logs and alerts are available and automated using their associated services like Google BigQuery for example.",
+            "title": "Google Cloud Platform"
+        },
+        {
+            "location": "/hadoop/",
+            "text": "Artificial Intelligence on a Hadoop Cluster\n\n\nObjective\n\n\nDeploying a Hadoop cluster is not the only objective of this project. We want to compute something with it. In order to explore the technical details of an actual implementation, a simple algorithm has been developed that can run on a Hadoop cluster of computers.\n\n\n\n\nSince this algorithm doesn't need that much compute power, executing it on a cloud cluster is for demonstration purposes\n\n\n\n\nAdvantage\n\n\nThanks to Java and the portability of the Hadoop program developing Hadoop programs is hardware independant. Thus, executing this algorithm on a local machine or on a cloud cluster if only a line of code away.\n\n\nMore documentation on the cloud computing is available here\n\n\nNa\u00efve Bayes Classification\n\n\nNa\u00efve Bayes Classification is a simple but yet powerful way to classify some objects. It's considered as a supervised machine learning algorithm. Based on the famous Bayes Theorem, it makes the final choice of class using probabilities. It's called \nna\u00efve\n because a strong assumption is made: that the studied variables are independant.\n\n\nHere is a simple but complete article about this algorithm\n\n\nComponents\n\n\nClassification\n\n\nStatic methods\n\n\nThe \nClassification\n class is used as a library. It exposes static methods to be called by the mapper and reducer classes and performs statistical computation in order to isolate what is not part of a Bayes algorithm. Here is the list of methods exposed and their signature.\n\n\nstatic void BuildClassOutputTable(ArrayList<Classification> Co,String reduceKey);\nstatic void BuildConditionalProbabilityOutput(ArrayList<Classification> Cop,String reduceKey);\n\nstatic void BuildProbabilityTable(ArrayList<Classification> Co, ArrayList<Classification> Cop, <Classification> PTable);\n\nstatic double GetConditionnalProbability(String attribute,String Class);\n\n\n\n\nAs we can, see the Bayes theorem is used. First, we build the probabilities of each class, then the conditional probabilities, and finaly build the whol probability table. When we want to compute a probability, we call \nGetConditionnalProbability\n.\n\n\nData structure\n\n\nThe \nClassification\n is also used as a data structure. As we can see in the constructor, it can encapsulate some attributes like the \nreducekey\n.\n\n\npublic Classification(String reducekey,double value) {\n    this.reducekey = reducekey; // Sunny,yes\n    this.value = value;\n    String[] tmp = reducekey.split(\",\"); \n    this.att = tmp[0]; // att[0]=Sunny\n    this.Class = tmp[1]; // att[1]=Yes\n}\n\n\n\n\nThus, we can store probabilities using Java polymorphism in the mapper and reducer classes. It's easier to manipulate in the rest of the algorithm. In this code sample, we can see the use of Java generics in order to type the ArrayLists content.\n\n\nstatic ArrayList<Classification> Co=new ArrayList<>(); // Class Output\nstatic ArrayList<Classification> Cpo=new ArrayList<>(); // Conditional probability Output\nstatic ArrayList<Classification> PTable = new ArrayList<>();\n\n\n\n\nClassifier\n\n\nThe \nClassifier\n is the main class to be executed by Hadoop. It contains the \nmain\n method that is the start of any Java program. This method sets up the context of the algorithm and its high level execution:\n\n\nSelecting the data structure to manipulate (see the next section about the \nClassification\n)\n\n\njob.setJarByClass(Classifier.class);    \n\n\n\n\nSelecting the mapper and reducer classes.\n\n\njob.setMapperClass(NaiveBayesMapper.class);\njob.setReducerClass(NaiveBayesReducer.class);\n\n\n\n\nDefining the I/O components. i.e how to read and write data. We can see that the method is chosen (Text), but the files are not yet defined.\n\n\njob.setInputFormatClass(TextInputFormat.class);\njob.setOutputFormatClass(TextOutputFormat.class);\n````\n\nFinaly, we can select the proper files that contain the data to process. The first is the training set, the other is to write the final results.\n\n```Java\nFileInputFormat.addInputPath(job, new Path(args[0]));\nFileOutputFormat.setOutputPath(job, new Path(args[1]));\n\n\n\n\nMapReduce\n\n\nInvented by Google, this pattern is an abstraction on how to manipulate data. First, the \nMap\n step aims to selecta part of our data to analyse. It can transform this part, but does not aggregate objects. Second, the \nReduce\n step aims to aggregage the results of the \nMap\n step, in order to compute the final result.\n\n\nMapper\n\n\nThe mapping is an operation that applies a transformation on a list of objects. This transformation is applied on each object, and returns another list of the same size. This transformation can be a simple selection of a property of each object, but it can also apply a mathematical computation.\n\n\nIn our algorithm, the mapper is implemented by the \nNaiveBayesMapper\n class. By convention (for Hadoop), this class implements only one method called \nmap\n. We can see that it calls static method from our \nlibrary\n named \nClassification\n. The \nClassifier\n is our manipulated data structure.\n\n\nClassification.BuildConditionalProbabilityOutput(Classifier.Cpo, key);\nClassification.BuildClassOutputTable(Classifier.Co, klass);\n\n\n\n\n\n\nIn this concrete example, the mapper maps the dataset to a list of probabilities. These are the intermediate probabilities refered to in the Naive Bayes algorithm.\n\n\n\n\nReducer\n\n\nThe reducing operation can now aggregage the transformations performed by the mapper. It allows our algorithm to output less values, i.e going through the whole dataset and get a final result.\n\n\nIn our algorithm, the reducer is implemented by the \nNaiveBayesReducer\n class. By convention (for Hadoop), this class implements only one method called \nreduce\n. We can see that it calls static methods from our \nlibrary\n named \nClassification\n. The \nClassifier\nis our manipulated data structure.\n\n\nClassification.BuildProbabilityTable(Classifier.Co, Classifier.Cpo, Classifier.PTable);\nposterior = posterior*Classification.GetConditionnalProbability(attributes[j], Classifier.Co.get(i).getclass());\n\n\n\n\n\n\nIn this concrete example, the reducer uses the previously mapped probabilities to compute the final table, and thus get the conditional probability. That's the final output of the Naive Bayes algorithm, called the \nmodel\n. This model can be used to classify new objects.\n\n\n\n\nGaussian Naive Bayes\n\n\nWhen dealing with continuous data, the general algorithm stays the same, but the way we handle data need to be adapted. That's why some new classes are implemented, and the manipulated values does not represent the same thing as the discrete implementation.\n\n\nData structures\n\n\nFirst, we need to implement different data structures:\n\n\n\n\nData\n\n\nStatistics\n\n\nProbability\n\n\nGaussianDistribution\n\n\n\n\nThese classes leverage the object oriented paradigm in order to encapsulate continuous data and expose methods to compute values such as the variance, the mean, etc.\n\n\nAlgorithm\n\n\nIn order to manipulate continuous data, we also have to adapt the base algorithm implementation. Instead of using descrete values of our training examples, the algorithm will leverage the previously detailed data structures and work on the aggregated values such as variance, mean, etc.\n\n\ndouble P_Height = pdf(Double.parseDouble(att[0]),female.getHeigtMeans(),female.getHeigtVariance());\ndouble P_Weight = pdf(Double.parseDouble(att[1]),female.getWeigtMeans(),female.getWeigtVariance());\ndouble P_FootSize = pdf(Double.parseDouble(att[2]),female.getHeigtMeans(),female.getFootSizeVariance());\n\nposterior=posterior*P_Height*P_Weight*P_FootSize;\n\n\n\n\nThe main behavior of the algorithm stays the same: we map & reduce values. It's the manipulated values that changed. Instead of manipulating \nraw\n data as discrete values, we aggregate a continuous set of data in order to output discrete values to work on.",
+            "title": "Hadoop"
+        },
+        {
+            "location": "/hadoop/#artificial-intelligence-on-a-hadoop-cluster",
+            "text": "",
+            "title": "Artificial Intelligence on a Hadoop Cluster"
+        },
+        {
+            "location": "/hadoop/#objective",
+            "text": "Deploying a Hadoop cluster is not the only objective of this project. We want to compute something with it. In order to explore the technical details of an actual implementation, a simple algorithm has been developed that can run on a Hadoop cluster of computers.   Since this algorithm doesn't need that much compute power, executing it on a cloud cluster is for demonstration purposes",
+            "title": "Objective"
+        },
+        {
+            "location": "/hadoop/#advantage",
+            "text": "Thanks to Java and the portability of the Hadoop program developing Hadoop programs is hardware independant. Thus, executing this algorithm on a local machine or on a cloud cluster if only a line of code away.  More documentation on the cloud computing is available here",
+            "title": "Advantage"
+        },
+        {
+            "location": "/hadoop/#naive-bayes-classification",
+            "text": "Na\u00efve Bayes Classification is a simple but yet powerful way to classify some objects. It's considered as a supervised machine learning algorithm. Based on the famous Bayes Theorem, it makes the final choice of class using probabilities. It's called  na\u00efve  because a strong assumption is made: that the studied variables are independant.  Here is a simple but complete article about this algorithm",
+            "title": "Na\u00efve Bayes Classification"
+        },
+        {
+            "location": "/hadoop/#components",
+            "text": "",
+            "title": "Components"
+        },
+        {
+            "location": "/hadoop/#classification",
+            "text": "",
+            "title": "Classification"
+        },
+        {
+            "location": "/hadoop/#static-methods",
+            "text": "The  Classification  class is used as a library. It exposes static methods to be called by the mapper and reducer classes and performs statistical computation in order to isolate what is not part of a Bayes algorithm. Here is the list of methods exposed and their signature.  static void BuildClassOutputTable(ArrayList<Classification> Co,String reduceKey);\nstatic void BuildConditionalProbabilityOutput(ArrayList<Classification> Cop,String reduceKey);\n\nstatic void BuildProbabilityTable(ArrayList<Classification> Co, ArrayList<Classification> Cop, <Classification> PTable);\n\nstatic double GetConditionnalProbability(String attribute,String Class);  As we can, see the Bayes theorem is used. First, we build the probabilities of each class, then the conditional probabilities, and finaly build the whol probability table. When we want to compute a probability, we call  GetConditionnalProbability .",
+            "title": "Static methods"
+        },
+        {
+            "location": "/hadoop/#data-structure",
+            "text": "The  Classification  is also used as a data structure. As we can see in the constructor, it can encapsulate some attributes like the  reducekey .  public Classification(String reducekey,double value) {\n    this.reducekey = reducekey; // Sunny,yes\n    this.value = value;\n    String[] tmp = reducekey.split(\",\"); \n    this.att = tmp[0]; // att[0]=Sunny\n    this.Class = tmp[1]; // att[1]=Yes\n}  Thus, we can store probabilities using Java polymorphism in the mapper and reducer classes. It's easier to manipulate in the rest of the algorithm. In this code sample, we can see the use of Java generics in order to type the ArrayLists content.  static ArrayList<Classification> Co=new ArrayList<>(); // Class Output\nstatic ArrayList<Classification> Cpo=new ArrayList<>(); // Conditional probability Output\nstatic ArrayList<Classification> PTable = new ArrayList<>();",
+            "title": "Data structure"
+        },
+        {
+            "location": "/hadoop/#classifier",
+            "text": "The  Classifier  is the main class to be executed by Hadoop. It contains the  main  method that is the start of any Java program. This method sets up the context of the algorithm and its high level execution:  Selecting the data structure to manipulate (see the next section about the  Classification )  job.setJarByClass(Classifier.class);      Selecting the mapper and reducer classes.  job.setMapperClass(NaiveBayesMapper.class);\njob.setReducerClass(NaiveBayesReducer.class);  Defining the I/O components. i.e how to read and write data. We can see that the method is chosen (Text), but the files are not yet defined.  job.setInputFormatClass(TextInputFormat.class);\njob.setOutputFormatClass(TextOutputFormat.class);\n````\n\nFinaly, we can select the proper files that contain the data to process. The first is the training set, the other is to write the final results.\n\n```Java\nFileInputFormat.addInputPath(job, new Path(args[0]));\nFileOutputFormat.setOutputPath(job, new Path(args[1]));",
+            "title": "Classifier"
+        },
+        {
+            "location": "/hadoop/#mapreduce",
+            "text": "Invented by Google, this pattern is an abstraction on how to manipulate data. First, the  Map  step aims to selecta part of our data to analyse. It can transform this part, but does not aggregate objects. Second, the  Reduce  step aims to aggregage the results of the  Map  step, in order to compute the final result.",
+            "title": "MapReduce"
+        },
+        {
+            "location": "/hadoop/#mapper",
+            "text": "The mapping is an operation that applies a transformation on a list of objects. This transformation is applied on each object, and returns another list of the same size. This transformation can be a simple selection of a property of each object, but it can also apply a mathematical computation.  In our algorithm, the mapper is implemented by the  NaiveBayesMapper  class. By convention (for Hadoop), this class implements only one method called  map . We can see that it calls static method from our  library  named  Classification . The  Classifier  is our manipulated data structure.  Classification.BuildConditionalProbabilityOutput(Classifier.Cpo, key);\nClassification.BuildClassOutputTable(Classifier.Co, klass);   In this concrete example, the mapper maps the dataset to a list of probabilities. These are the intermediate probabilities refered to in the Naive Bayes algorithm.",
+            "title": "Mapper"
+        },
+        {
+            "location": "/hadoop/#reducer",
+            "text": "The reducing operation can now aggregage the transformations performed by the mapper. It allows our algorithm to output less values, i.e going through the whole dataset and get a final result.  In our algorithm, the reducer is implemented by the  NaiveBayesReducer  class. By convention (for Hadoop), this class implements only one method called  reduce . We can see that it calls static methods from our  library  named  Classification . The  Classifier is our manipulated data structure.  Classification.BuildProbabilityTable(Classifier.Co, Classifier.Cpo, Classifier.PTable);\nposterior = posterior*Classification.GetConditionnalProbability(attributes[j], Classifier.Co.get(i).getclass());   In this concrete example, the reducer uses the previously mapped probabilities to compute the final table, and thus get the conditional probability. That's the final output of the Naive Bayes algorithm, called the  model . This model can be used to classify new objects.",
+            "title": "Reducer"
+        },
+        {
+            "location": "/hadoop/#gaussian-naive-bayes",
+            "text": "When dealing with continuous data, the general algorithm stays the same, but the way we handle data need to be adapted. That's why some new classes are implemented, and the manipulated values does not represent the same thing as the discrete implementation.",
+            "title": "Gaussian Naive Bayes"
+        },
+        {
+            "location": "/hadoop/#data-structures",
+            "text": "First, we need to implement different data structures:   Data  Statistics  Probability  GaussianDistribution   These classes leverage the object oriented paradigm in order to encapsulate continuous data and expose methods to compute values such as the variance, the mean, etc.",
+            "title": "Data structures"
+        },
+        {
+            "location": "/hadoop/#algorithm",
+            "text": "In order to manipulate continuous data, we also have to adapt the base algorithm implementation. Instead of using descrete values of our training examples, the algorithm will leverage the previously detailed data structures and work on the aggregated values such as variance, mean, etc.  double P_Height = pdf(Double.parseDouble(att[0]),female.getHeigtMeans(),female.getHeigtVariance());\ndouble P_Weight = pdf(Double.parseDouble(att[1]),female.getWeigtMeans(),female.getWeigtVariance());\ndouble P_FootSize = pdf(Double.parseDouble(att[2]),female.getHeigtMeans(),female.getFootSizeVariance());\n\nposterior=posterior*P_Height*P_Weight*P_FootSize;  The main behavior of the algorithm stays the same: we map & reduce values. It's the manipulated values that changed. Instead of manipulating  raw  data as discrete values, we aggregate a continuous set of data in order to output discrete values to work on.",
+            "title": "Algorithm"
+        },
+        {
+            "location": "/cloud/aws/",
+            "text": "AWS EMR\n\n\nAmazon Web Services - Elastic Map Reduce is a web service that allows the user to setup a cloud cluster in order to perform MapReduce tasks. Nodes are automaticaly connected (either physicaly or logicaly), the operating system is installed and a big data framework is installed. This page details how to deploy a Hadoop Cluster on AWS in order to perform MapReduce algorithms.\n\n\nCreating the cluster\n\n\nIn the Elastic Map Reduce service (EMR), click the \ncreate a cluster\n button. There is only one page to choose the configuration.\n\n\nFirst, we need to configure the logical layer that runs on the cluster.\n\n\n\n\n\n\nChoose a name for the cluster\n\n\nSelect the \ncluster\n mode\n\n\nSelect the \nCore Hadoop\n logical layer\n\n\n\n\n\n\nWe can see that other frameworks are available, but the basic Hadoop is enough for this project\n\n\n\n\n\n\nAfter selecting the logical layer, we need to choose the number and type of nodes to run in the cluster. The number of nodes should not be even but odd instead, in order to have a master.\n\n\nTo get more informations about the AWS instances types, you get read \nthis page\n\n\nExecution the algorithm\n\n\nWhen the cluster is up, you can run your algorithm by uploading Java code.\n\n\n\n\nSelect the cluster you just created\n\n\nGo to the \nSteps\n page\n\n\nClick the \nAdd step\n button\n\n\n\n\nYou can now upload your Java code in the form of a \n.jar\n file. You can also specify arguments to add on the execution command\n\n\n\n\n\n\nWhen a step is added, you can run the algorithm on the cluster by clicking the \nRun steps\n button",
+            "title": "Amazon Web Services"
+        },
+        {
+            "location": "/cloud/aws/#aws-emr",
+            "text": "Amazon Web Services - Elastic Map Reduce is a web service that allows the user to setup a cloud cluster in order to perform MapReduce tasks. Nodes are automaticaly connected (either physicaly or logicaly), the operating system is installed and a big data framework is installed. This page details how to deploy a Hadoop Cluster on AWS in order to perform MapReduce algorithms.",
+            "title": "AWS EMR"
+        },
+        {
+            "location": "/cloud/aws/#creating-the-cluster",
+            "text": "In the Elastic Map Reduce service (EMR), click the  create a cluster  button. There is only one page to choose the configuration.  First, we need to configure the logical layer that runs on the cluster.    Choose a name for the cluster  Select the  cluster  mode  Select the  Core Hadoop  logical layer    We can see that other frameworks are available, but the basic Hadoop is enough for this project    After selecting the logical layer, we need to choose the number and type of nodes to run in the cluster. The number of nodes should not be even but odd instead, in order to have a master.  To get more informations about the AWS instances types, you get read  this page",
+            "title": "Creating the cluster"
+        },
+        {
+            "location": "/cloud/aws/#execution-the-algorithm",
+            "text": "When the cluster is up, you can run your algorithm by uploading Java code.   Select the cluster you just created  Go to the  Steps  page  Click the  Add step  button   You can now upload your Java code in the form of a  .jar  file. You can also specify arguments to add on the execution command    When a step is added, you can run the algorithm on the cluster by clicking the  Run steps  button",
+            "title": "Execution the algorithm"
+        },
+        {
+            "location": "/relational/indexing/",
+            "text": "Indexing",
+            "title": "Indexing"
+        },
+        {
+            "location": "/relational/indexing/#indexing",
+            "text": "",
+            "title": "Indexing"
+        },
+        {
+            "location": "/relational/",
+            "text": "Relational database\n\n\nRelational databases are softwares that allow to store data using relations. They expose to the user many constraints that ensures performance and scalability. The design of those softwares has been exposed in the 70's, and has not really changed since. To understand how most modern RDBMS are implemented, we refered to \nthis book about database management systems\n.\n\n\nDisk Management\n\n\nUsing a DiskManager, modern database systems tend to encapsulate the file system interface into a dedicated structure / class / module. However, it is not the case in the current project. Indeed, the file system interface is called and used in various components:\n\n\n\n\nThe \noutils\n exposes several functions that the programmer may need in different layers of the software. Thus, the file system may be manipulated in several functions\n\n\nThe \nDBWR\n (which seems to stand for \ndatabase writer\n) is the closest component to a Disk Manager. It \nscans\n the database system every 3 seconds in order to persist the modifications on disk\n\n\nThe \nLRUCache\n is more \nmemory management\n oriented, but is calling the file system in several places.\n\n\n\n\nOne way to reduce the technical debt would be to isolate the calls to the file system interface. It would be easier to test how we manage the persistance on disk, and it would be reusable from different components. In practice, we could implement a dedicated structure (DiskManager) in charge of using the file system interface. This structure would keep track of the opened OS files & ensure we are not leaking disk memory.\n\n\nMore informations here\n\n\nBuffer Management\n\n\nThe BufferManager is the core component of modern RDBMS. It's in charge of using the DiskManager & manipulate the memory in order to address the constraints of performance as well as persistance.\n\n\nAgain, the current project does not really separate this concern from others. Memory is allocated and freed in many parts of the code base. However, the \nLRUCache\n seems to implement the main logic of managing the database core data (nodes, DB files, ...). This component can be completed by declaring a structure that would expose methods to manipulate the memory transparently, i.e manipulating DB files with powerful functions, encapsulating lower levels of logic, etc.\n\n\n\n\nLRUCache\n is manipulating \nextensions\n. It seems to be the \npages overflow\n as refered in the book linked at the beggining. But this is not sure.\n\n\n\n\nMore informations here\n\n\nGlobal Manager\n\n\nThe GlobalManager is in charge of exposing what's necessary to the end user. He/She wants to create tables, insert data, update, read it or delete it. The \ntableOperations\n module contains the higher levels of logic, directly exposed to the end user: create, update, delete, insert. Even if those functions seem to be encapsulated into a dedicated module (which should be renamed in order to match some convention), they all rely on lower level components like the file system interface, or memory management functions. Thus, they are hard to test, and hard to upgrade in time. If the DiskManager & the BufferManager are correctly implemented, it should be easy to refactor the \ntableOperations\n module in order to make it use the newly implemented components. It then should be easier to test, since the lower level of abstractions will be tested independantly.\n\n\nMore informations here\n\n\nIndexing\n\n\nMore informations here\n\n\nOther\n\n\nAlgorithms\n\n\nJoin algorithms are written in a dedicated file. However, the code complexity is very high and not documented. We'll be able to reduce the tech debt by making the code easier to understand (e.g using proper var names), and document it.\n\n\nInterface\n\n\nWhile the DBMS exposes a command line interface (CLI), it would be easier to encapsulate those mechanics in a dedicated module. It would be easier to test and easier to read where it's used. It would also be more powerful since it would be reusable, and implementing more complex functions.\n\n\nInstance\n\n\nThe \ninstance\n module is in charge of instanciating a database by allocating the needed memory and initializing the correct variables. This task belongs to the GlobalManager. Also, the \nInterface\n agent would be used in order to display a proper CLI and leaving the manager at its own task.\n\n\nHistroy\n\n\nWhat is a \nhistory\n ???",
+            "title": "Relational"
+        },
+        {
+            "location": "/relational/#relational-database",
+            "text": "Relational databases are softwares that allow to store data using relations. They expose to the user many constraints that ensures performance and scalability. The design of those softwares has been exposed in the 70's, and has not really changed since. To understand how most modern RDBMS are implemented, we refered to  this book about database management systems .",
+            "title": "Relational database"
+        },
+        {
+            "location": "/relational/#disk-management",
+            "text": "Using a DiskManager, modern database systems tend to encapsulate the file system interface into a dedicated structure / class / module. However, it is not the case in the current project. Indeed, the file system interface is called and used in various components:   The  outils  exposes several functions that the programmer may need in different layers of the software. Thus, the file system may be manipulated in several functions  The  DBWR  (which seems to stand for  database writer ) is the closest component to a Disk Manager. It  scans  the database system every 3 seconds in order to persist the modifications on disk  The  LRUCache  is more  memory management  oriented, but is calling the file system in several places.   One way to reduce the technical debt would be to isolate the calls to the file system interface. It would be easier to test how we manage the persistance on disk, and it would be reusable from different components. In practice, we could implement a dedicated structure (DiskManager) in charge of using the file system interface. This structure would keep track of the opened OS files & ensure we are not leaking disk memory.  More informations here",
+            "title": "Disk Management"
+        },
+        {
+            "location": "/relational/#buffer-management",
+            "text": "The BufferManager is the core component of modern RDBMS. It's in charge of using the DiskManager & manipulate the memory in order to address the constraints of performance as well as persistance.  Again, the current project does not really separate this concern from others. Memory is allocated and freed in many parts of the code base. However, the  LRUCache  seems to implement the main logic of managing the database core data (nodes, DB files, ...). This component can be completed by declaring a structure that would expose methods to manipulate the memory transparently, i.e manipulating DB files with powerful functions, encapsulating lower levels of logic, etc.   LRUCache  is manipulating  extensions . It seems to be the  pages overflow  as refered in the book linked at the beggining. But this is not sure.   More informations here",
+            "title": "Buffer Management"
+        },
+        {
+            "location": "/relational/#global-manager",
+            "text": "The GlobalManager is in charge of exposing what's necessary to the end user. He/She wants to create tables, insert data, update, read it or delete it. The  tableOperations  module contains the higher levels of logic, directly exposed to the end user: create, update, delete, insert. Even if those functions seem to be encapsulated into a dedicated module (which should be renamed in order to match some convention), they all rely on lower level components like the file system interface, or memory management functions. Thus, they are hard to test, and hard to upgrade in time. If the DiskManager & the BufferManager are correctly implemented, it should be easy to refactor the  tableOperations  module in order to make it use the newly implemented components. It then should be easier to test, since the lower level of abstractions will be tested independantly.  More informations here",
+            "title": "Global Manager"
+        },
+        {
+            "location": "/relational/#indexing",
+            "text": "More informations here",
+            "title": "Indexing"
+        },
+        {
+            "location": "/relational/#other",
+            "text": "",
+            "title": "Other"
+        },
+        {
+            "location": "/relational/#algorithms",
+            "text": "Join algorithms are written in a dedicated file. However, the code complexity is very high and not documented. We'll be able to reduce the tech debt by making the code easier to understand (e.g using proper var names), and document it.",
+            "title": "Algorithms"
+        },
+        {
+            "location": "/relational/#interface",
+            "text": "While the DBMS exposes a command line interface (CLI), it would be easier to encapsulate those mechanics in a dedicated module. It would be easier to test and easier to read where it's used. It would also be more powerful since it would be reusable, and implementing more complex functions.",
+            "title": "Interface"
+        },
+        {
+            "location": "/relational/#instance",
+            "text": "The  instance  module is in charge of instanciating a database by allocating the needed memory and initializing the correct variables. This task belongs to the GlobalManager. Also, the  Interface  agent would be used in order to display a proper CLI and leaving the manager at its own task.",
+            "title": "Instance"
+        },
+        {
+            "location": "/relational/#histroy",
+            "text": "What is a  history  ???",
+            "title": "Histroy"
+        },
+        {
+            "location": "/relational/disk/",
+            "text": "Disk Management\n\n\nWhy\n\n\nSince databases are meant to store data on a long term, they must implement a persistant layer. This is done storing data on the machine disk. Accessing the disk space is very slow, compared to the random access memory (RAM). That's why we must decouple the logic to persist the data and the logic to manipulate it.\n\n\nHow\n\n\nLogicaly, accessing the file system API is done with several native functions:\n\n\n\n\nfopen\n to open a file, either in RAM or on the disk\n\n\nfread\n to read the content of a file\n\n\nfseek\n to move the cursor position in the file\n\n\nftell\n to get the cursor position in the file\n\n\nfclose\n to close an onpened file in order to avoid memory leak\n\n\n\n\nWhat\n\n\nThe current project uses threads to limit the dependencies those two actions have; it's done in the \ndbwr\n module. This module is started in a dedicated thread using \npthread_create(&threadDbwr, NULL, (void *)*startDbwr, NULL);\n in the \ninstance\n module. This allows the database to write on disk some informations every 3 seconds, without impacting the performances of a query.\n\n\nvoid scan()\n{\n    FILE file = fopen('file.txt');\n    fwrite(\"Hello World\", file);\n    fclose(file);\n}\n\nwhile(1)\n{\n    sleep(3);\n    scan();\n}\n\n\n\n\nNext\n\n\nThe problem is that the file system is not only accessed through the \ndbwr\n module: other functions may call it and considerably slow down the whole software.\n\n\nWe would like to implement a dedicated software layer that would be in charge of exposing functions to call in order to perform actions. The advantage is that we could decouple this module, or decouple the disk access using threads in the single component we describe. The second step would be to refactor the project in order to perform disk actions using this module, instead of directly accessing the file system interface.",
+            "title": "DiskManager"
+        },
+        {
+            "location": "/relational/disk/#disk-management",
+            "text": "",
+            "title": "Disk Management"
+        },
+        {
+            "location": "/relational/disk/#why",
+            "text": "Since databases are meant to store data on a long term, they must implement a persistant layer. This is done storing data on the machine disk. Accessing the disk space is very slow, compared to the random access memory (RAM). That's why we must decouple the logic to persist the data and the logic to manipulate it.",
+            "title": "Why"
+        },
+        {
+            "location": "/relational/disk/#how",
+            "text": "Logicaly, accessing the file system API is done with several native functions:   fopen  to open a file, either in RAM or on the disk  fread  to read the content of a file  fseek  to move the cursor position in the file  ftell  to get the cursor position in the file  fclose  to close an onpened file in order to avoid memory leak",
+            "title": "How"
+        },
+        {
+            "location": "/relational/disk/#what",
+            "text": "The current project uses threads to limit the dependencies those two actions have; it's done in the  dbwr  module. This module is started in a dedicated thread using  pthread_create(&threadDbwr, NULL, (void *)*startDbwr, NULL);  in the  instance  module. This allows the database to write on disk some informations every 3 seconds, without impacting the performances of a query.  void scan()\n{\n    FILE file = fopen('file.txt');\n    fwrite(\"Hello World\", file);\n    fclose(file);\n}\n\nwhile(1)\n{\n    sleep(3);\n    scan();\n}",
+            "title": "What"
+        },
+        {
+            "location": "/relational/disk/#next",
+            "text": "The problem is that the file system is not only accessed through the  dbwr  module: other functions may call it and considerably slow down the whole software.  We would like to implement a dedicated software layer that would be in charge of exposing functions to call in order to perform actions. The advantage is that we could decouple this module, or decouple the disk access using threads in the single component we describe. The second step would be to refactor the project in order to perform disk actions using this module, instead of directly accessing the file system interface.",
+            "title": "Next"
+        },
+        {
+            "location": "/documentation/",
+            "text": "Documentation\n\n\nThis documentation is a global & high level description of the current project. Some parts expose the reason behind some choices, and other give some details about the implementation. This page describes how it's compiled and deployed.\n\n\nMarkdown\n\n\nMarkdown is lightweight markup language that allows the reader to read it without having to \ndecode\n it. If interpreted, it displays simple but powerful styles to enhance the reader experience.\n\n\nWhy\n\n\nWe wanted to keep this documentation as close as possible to the code base. This way, we ensure that it evolves easily with it and thus stays up to date. Moreover, it's versionned, bringing all the advantages that versionning has. For example, developers can cooperate on it, and automation can be done using continuous deployment methods.\n\n\nHow\n\n\nBy being lightweight, Markdown allows any developer to update this documentation in coordination with the code. It does not require deep knowledges and can be read without any interpreter for a fast information access. Thus, those pages are kept in the same directory as the code base.\n\n\nWhat\n\n\nIn practice, this documentation has its roots in the \ndoc\n folder. Files are grouped by themes like \nrelational\n, \nhadoop\n or \ncloud\n. During development, anyone can update the related file to add some details, or update them. Then, using the version control system associated with the project, the updates are commited and saved.\n\n\nDeploy\n\n\nFor our client, we wanted to \ndeploy\n this documentation. This means that we watend to make it accessible from the web.\n\n\nMkDocs\n\n\nMkDocs is a small python package that compiles Markdown syntax to a complete HTML website. This package is perfect to deploy the documentation on the internet.\n\n\nTo update the documentation, the developer can use a terminal to execute \nmkdocs build\n. This command must be executed on the level of the \nmkdocs.yml\n file.\n\n\nThen, you have to move the content of the resulting \nsite\n folder in the dedicated \ninformaticode.github.io\n git repository. When \ngit push\n is done, Github Pages will automaticaly deploy the website \non the internet\n\n\nMore details about MkDocs are available here\n\n\nGithub Pages\n\n\nGithub Pages is a Github product that allows everyone to deploy a static website for free. For one Github account, e.g name \ninformaticode\n, one repository can be named \n<account>.github.io\n, e.g \ninformaticode.github.io\n.\n\n\nBy using this convention, you can access the web URL https://\\<account>.github.io/, e.g https://informaticode.github.io/ to see the static website.\n\n\nThis allows to continuously integrate and deploy changes on the website by leveraging the mechanics of Git versionning system.\n\n\nMore details about Github Pages are available here",
+            "title": "Documentation"
+        },
+        {
+            "location": "/documentation/#documentation",
+            "text": "This documentation is a global & high level description of the current project. Some parts expose the reason behind some choices, and other give some details about the implementation. This page describes how it's compiled and deployed.",
+            "title": "Documentation"
+        },
+        {
+            "location": "/documentation/#markdown",
+            "text": "Markdown is lightweight markup language that allows the reader to read it without having to  decode  it. If interpreted, it displays simple but powerful styles to enhance the reader experience.",
+            "title": "Markdown"
+        },
+        {
+            "location": "/documentation/#why",
+            "text": "We wanted to keep this documentation as close as possible to the code base. This way, we ensure that it evolves easily with it and thus stays up to date. Moreover, it's versionned, bringing all the advantages that versionning has. For example, developers can cooperate on it, and automation can be done using continuous deployment methods.",
+            "title": "Why"
+        },
+        {
+            "location": "/documentation/#how",
+            "text": "By being lightweight, Markdown allows any developer to update this documentation in coordination with the code. It does not require deep knowledges and can be read without any interpreter for a fast information access. Thus, those pages are kept in the same directory as the code base.",
+            "title": "How"
+        },
+        {
+            "location": "/documentation/#what",
+            "text": "In practice, this documentation has its roots in the  doc  folder. Files are grouped by themes like  relational ,  hadoop  or  cloud . During development, anyone can update the related file to add some details, or update them. Then, using the version control system associated with the project, the updates are commited and saved.",
+            "title": "What"
+        },
+        {
+            "location": "/documentation/#deploy",
+            "text": "For our client, we wanted to  deploy  this documentation. This means that we watend to make it accessible from the web.",
+            "title": "Deploy"
+        },
+        {
+            "location": "/documentation/#mkdocs",
+            "text": "MkDocs is a small python package that compiles Markdown syntax to a complete HTML website. This package is perfect to deploy the documentation on the internet.  To update the documentation, the developer can use a terminal to execute  mkdocs build . This command must be executed on the level of the  mkdocs.yml  file.  Then, you have to move the content of the resulting  site  folder in the dedicated  informaticode.github.io  git repository. When  git push  is done, Github Pages will automaticaly deploy the website  on the internet  More details about MkDocs are available here",
+            "title": "MkDocs"
+        },
+        {
+            "location": "/documentation/#github-pages",
+            "text": "Github Pages is a Github product that allows everyone to deploy a static website for free. For one Github account, e.g name  informaticode , one repository can be named  <account>.github.io , e.g  informaticode.github.io .  By using this convention, you can access the web URL https://\\<account>.github.io/, e.g https://informaticode.github.io/ to see the static website.  This allows to continuously integrate and deploy changes on the website by leveraging the mechanics of Git versionning system.  More details about Github Pages are available here",
+            "title": "Github Pages"
+        },
+        {
+            "location": "/relational/buffer/",
+            "text": "Buffer Management\n\n\nWhy\n\n\nIn order to optimize performances of a database system, the random access memory (R.A.M) is widely used. The idea is to load some data from the computer disk (using the \nDiskManager\n), and manipulate it in memory before writting the result on the disk. Since we split the logic dealing with the disk and the one dealing with the RAM, we can get good speed of execution while ensuring persistance.\n\n\nHow\n\n\nLogicaly, accessing the computer memory is built into most languages. It's abstracted by \nvariables\n, which represent a memory space. Depending on the language implementation, some abstractions may exist like pointers, structures, objects, etc. Since our database is implemented using the C language, those abstractions are \nlow level\n. It means that the developer needs to manipulate the allocated memory carefuly, in order to avoid memory leak.\n\n\nAlso, the project must implement itself some abstractions in order to keep a scalable software architecture. The BufferManager is the main abstraction dealing with memory. This software component (often represented by a structure or a class) is in charge of allocating and manipulating some memory space by exposing functions and types to deal with our data.\n\n\nWhat\n\n\nCurrently, the main module dealing with DBMS abstractions is the LRUCache. It exposes functions to manipulate DB files, add and remove pages overflow. The associated header file (\nLRUCache.h\n) exposes structures that reprensent the database logical entities like nodes and hashes.\n\n\nNext\n\n\nEven if most of the logical components are grouped in the LRUCache module, the memory is widely manipulated outside of it. The manipulated structures are created and freed in pretty much every other module, which complicates the testing and make the whole software more complex.\n\n\nOne again, we would like to isolate the logic of dealing with memory. It means that we would like to create a \nbuffer_pool\n that would store the hole data we need to access rapidly. By encapsulating this structure into a dedicated structure or module, we could manage its life cycle and ensure there are no memory leak. Also, testing the memory management would be easier, thus increasing the global resilience of our database.",
+            "title": "BufferManager"
+        },
+        {
+            "location": "/relational/buffer/#buffer-management",
+            "text": "",
+            "title": "Buffer Management"
+        },
+        {
+            "location": "/relational/buffer/#why",
+            "text": "In order to optimize performances of a database system, the random access memory (R.A.M) is widely used. The idea is to load some data from the computer disk (using the  DiskManager ), and manipulate it in memory before writting the result on the disk. Since we split the logic dealing with the disk and the one dealing with the RAM, we can get good speed of execution while ensuring persistance.",
+            "title": "Why"
+        },
+        {
+            "location": "/relational/buffer/#how",
+            "text": "Logicaly, accessing the computer memory is built into most languages. It's abstracted by  variables , which represent a memory space. Depending on the language implementation, some abstractions may exist like pointers, structures, objects, etc. Since our database is implemented using the C language, those abstractions are  low level . It means that the developer needs to manipulate the allocated memory carefuly, in order to avoid memory leak.  Also, the project must implement itself some abstractions in order to keep a scalable software architecture. The BufferManager is the main abstraction dealing with memory. This software component (often represented by a structure or a class) is in charge of allocating and manipulating some memory space by exposing functions and types to deal with our data.",
+            "title": "How"
+        },
+        {
+            "location": "/relational/buffer/#what",
+            "text": "Currently, the main module dealing with DBMS abstractions is the LRUCache. It exposes functions to manipulate DB files, add and remove pages overflow. The associated header file ( LRUCache.h ) exposes structures that reprensent the database logical entities like nodes and hashes.",
+            "title": "What"
+        },
+        {
+            "location": "/relational/buffer/#next",
+            "text": "Even if most of the logical components are grouped in the LRUCache module, the memory is widely manipulated outside of it. The manipulated structures are created and freed in pretty much every other module, which complicates the testing and make the whole software more complex.  One again, we would like to isolate the logic of dealing with memory. It means that we would like to create a  buffer_pool  that would store the hole data we need to access rapidly. By encapsulating this structure into a dedicated structure or module, we could manage its life cycle and ensure there are no memory leak. Also, testing the memory management would be easier, thus increasing the global resilience of our database.",
+            "title": "Next"
+        },
+        {
+            "location": "/relational/global/",
+            "text": "Global Manager\n\n\nThe global manager is the main component that logical abstracts the internals of a database management system. Instead of directly working with the file system or exposing internal algorithms, this structure (or class) gives higher level methods that directly represent the end user actions like inserting rows, executing a query or creating a table.\n\n\nCurently, this abstraction is not present. The modules under \nParser\n implement the end user actions, but directly accesses lower levels of abstractions (like file system or internal algorithms). A proper way to logicaly communicate with our database would be to expose those functions in a dedicated structure (e.g \ninstance\n module). Since we would have refactored the code base in order to use more powerful components (like the BufferManger or the DiskManager), the resulting functions that effectively manipulate the data would be far less complex than what's currently implemented in the \nParser\n module.\n\n\nHere is an example of GlobalManager implementation\n\n\ntypedef struct GlobalManager\n{\n    DiskManager disk;\n    BufferManager buffer;\n\n    /**\n    * These would be function pointers, to emulate object oriented. It could be independant functions.\n    * /\n    void create_table;\n    void insert_row;\n    void delete_row;\n    ...\n\n    void execute_query; // Call Parser just for parsing\n\n} GlobalManager;",
+            "title": "GlobalManager"
+        },
+        {
+            "location": "/relational/global/#global-manager",
+            "text": "The global manager is the main component that logical abstracts the internals of a database management system. Instead of directly working with the file system or exposing internal algorithms, this structure (or class) gives higher level methods that directly represent the end user actions like inserting rows, executing a query or creating a table.  Curently, this abstraction is not present. The modules under  Parser  implement the end user actions, but directly accesses lower levels of abstractions (like file system or internal algorithms). A proper way to logicaly communicate with our database would be to expose those functions in a dedicated structure (e.g  instance  module). Since we would have refactored the code base in order to use more powerful components (like the BufferManger or the DiskManager), the resulting functions that effectively manipulate the data would be far less complex than what's currently implemented in the  Parser  module.  Here is an example of GlobalManager implementation  typedef struct GlobalManager\n{\n    DiskManager disk;\n    BufferManager buffer;\n\n    /**\n    * These would be function pointers, to emulate object oriented. It could be independant functions.\n    * /\n    void create_table;\n    void insert_row;\n    void delete_row;\n    ...\n\n    void execute_query; // Call Parser just for parsing\n\n} GlobalManager;",
+            "title": "Global Manager"
+        }
+    ]
+}

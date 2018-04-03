@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>GlobalManager - BQLDatabase</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "GlobalManager";
+    var mkdocs_page_input_path = "relational/global.md";
+    var mkdocs_page_url = "/relational/global/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> BQLDatabase</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../cloud/">Cloud</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../hadoop/">Hadoop</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../cloud/aws/">Amazon Web Services</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../indexing/">Indexing</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../">Relational</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../disk/">DiskManager</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../documentation/">Documentation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../buffer/">BufferManager</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">GlobalManager</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#global-manager">Global Manager</a></li>
+    
+
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">BQLDatabase</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>GlobalManager</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="global-manager">Global Manager</h1>
+<p>The global manager is the main component that logical abstracts the internals of a database management system. Instead of directly working with the file system or exposing internal algorithms, this structure (or class) gives higher level methods that directly represent the end user actions like inserting rows, executing a query or creating a table.</p>
+<p>Curently, this abstraction is not present. The modules under <em>Parser</em> implement the end user actions, but directly accesses lower levels of abstractions (like file system or internal algorithms). A proper way to logicaly communicate with our database would be to expose those functions in a dedicated structure (e.g <code>instance</code> module). Since we would have refactored the code base in order to use more powerful components (like the BufferManger or the DiskManager), the resulting functions that effectively manipulate the data would be far less complex than what's currently implemented in the <em>Parser</em> module.</p>
+<p>Here is an example of GlobalManager implementation</p>
+<pre><code>typedef struct GlobalManager
+{
+    DiskManager disk;
+    BufferManager buffer;
+
+    /**
+    * These would be function pointers, to emulate object oriented. It could be independant functions.
+    * /
+    void create_table;
+    void insert_row;
+    void delete_row;
+    ...
+
+    void execute_query; // Call Parser just for parsing
+
+} GlobalManager;
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../buffer/" class="btn btn-neutral" title="BufferManager"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../buffer/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/require.js"></script>
+      <script src="../../search/search.js"></script>
+
+</body>
+</html>
