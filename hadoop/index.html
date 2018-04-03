@@ -74,10 +74,17 @@
         
             <li><a class="toctree-l3" href="#components">Components</a></li>
         
+            <li><a class="toctree-l3" href="#gaussian-naive-bayes">Gaussian Naive Bayes</a></li>
+        
         </ul>
     
 
     </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../cloud/aws/">Amazon Web Services</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -229,6 +236,27 @@ posterior = posterior*Classification.GetConditionnalProbability(attributes[j], C
 <blockquote>
 <p>In this concrete example, the reducer uses the previously mapped probabilities to compute the final table, and thus get the conditional probability. That's the final output of the Naive Bayes algorithm, called the <em>model</em>. This model can be used to classify new objects.</p>
 </blockquote>
+<h2 id="gaussian-naive-bayes">Gaussian Naive Bayes</h2>
+<p>When dealing with continuous data, the general algorithm stays the same, but the way we handle data need to be adapted. That's why some new classes are implemented, and the manipulated values does not represent the same thing as the discrete implementation.</p>
+<h3 id="data-structures">Data structures</h3>
+<p>First, we need to implement different data structures:</p>
+<ul>
+<li><code>Data</code></li>
+<li><code>Statistics</code></li>
+<li><code>Probability</code></li>
+<li><code>GaussianDistribution</code></li>
+</ul>
+<p>These classes leverage the object oriented paradigm in order to encapsulate continuous data and expose methods to compute values such as the variance, the mean, etc.</p>
+<h3 id="algorithm">Algorithm</h3>
+<p>In order to manipulate continuous data, we also have to adapt the base algorithm implementation. Instead of using descrete values of our training examples, the algorithm will leverage the previously detailed data structures and work on the aggregated values such as variance, mean, etc.</p>
+<pre><code class="Java">double P_Height = pdf(Double.parseDouble(att[0]),female.getHeigtMeans(),female.getHeigtVariance());
+double P_Weight = pdf(Double.parseDouble(att[1]),female.getWeigtMeans(),female.getWeigtVariance());
+double P_FootSize = pdf(Double.parseDouble(att[2]),female.getHeigtMeans(),female.getFootSizeVariance());
+
+posterior=posterior*P_Height*P_Weight*P_FootSize;
+</code></pre>
+
+<p>The main behavior of the algorithm stays the same: we map &amp; reduce values. It's the manipulated values that changed. Instead of manipulating <em>raw</em> data as discrete values, we aggregate a continuous set of data in order to output discrete values to work on.</p>
               
             </div>
           </div>
@@ -236,7 +264,7 @@ posterior = posterior*Classification.GetConditionnalProbability(attributes[j], C
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../relational/indexing/" class="btn btn-neutral float-right" title="Indexing">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../cloud/aws/" class="btn btn-neutral float-right" title="Amazon Web Services">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../cloud/" class="btn btn-neutral" title="Cloud"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -268,7 +296,7 @@ posterior = posterior*Classification.GetConditionnalProbability(attributes[j], C
         <span><a href="../cloud/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../relational/indexing/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../cloud/aws/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

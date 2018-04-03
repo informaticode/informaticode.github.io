@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>GlobalManager - BQLDatabase</title>
+  <title>Amazon Web Services - BQLDatabase</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "GlobalManager";
-    var mkdocs_page_input_path = "relational/global.md";
-    var mkdocs_page_url = "/relational/global/";
+    var mkdocs_page_name = "Amazon Web Services";
+    var mkdocs_page_input_path = "cloud/aws.md";
+    var mkdocs_page_url = "/cloud/aws/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -54,7 +54,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../../cloud/">Cloud</a>
+    <a class="" href="../">Cloud</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -62,24 +62,38 @@
     <a class="" href="../../hadoop/">Hadoop</a>
 	    </li>
           
-            <li class="toctree-l1">
+            <li class="toctree-l1 current">
 		
-    <a class="" href="../../cloud/aws/">Amazon Web Services</a>
+    <a class="current" href="./">Amazon Web Services</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#aws-emr">AWS EMR</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#creating-the-cluster">Creating the cluster</a></li>
+        
+            <li><a class="toctree-l3" href="#execution-the-algorithm">Execution the algorithm</a></li>
+        
+        </ul>
+    
+
+    </ul>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../indexing/">Indexing</a>
+    <a class="" href="../../relational/indexing/">Indexing</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../">Relational</a>
+    <a class="" href="../../relational/">Relational</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../disk/">DiskManager</a>
+    <a class="" href="../../relational/disk/">DiskManager</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -89,18 +103,12 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../buffer/">BufferManager</a>
+    <a class="" href="../../relational/buffer/">BufferManager</a>
 	    </li>
           
-            <li class="toctree-l1 current">
+            <li class="toctree-l1">
 		
-    <a class="current" href="./">GlobalManager</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#global-manager">Global Manager</a></li>
-    
-
-    </ul>
+    <a class="" href="../../relational/global/">GlobalManager</a>
 	    </li>
           
         </ul>
@@ -125,7 +133,7 @@
     
       
     
-    <li>GlobalManager</li>
+    <li>Amazon Web Services</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -135,27 +143,35 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="global-manager">Global Manager</h1>
-<p>The global manager is the main component that logical abstracts the internals of a database management system. Instead of directly working with the file system or exposing internal algorithms, this structure (or class) gives higher level methods that directly represent the end user actions like inserting rows, executing a query or creating a table.</p>
-<p>Curently, this abstraction is not present. The modules under <em>Parser</em> implement the end user actions, but directly accesses lower levels of abstractions (like file system or internal algorithms). A proper way to logicaly communicate with our database would be to expose those functions in a dedicated structure (e.g <code>instance</code> module). Since we would have refactored the code base in order to use more powerful components (like the BufferManger or the DiskManager), the resulting functions that effectively manipulate the data would be far less complex than what's currently implemented in the <em>Parser</em> module.</p>
-<p>Here is an example of GlobalManager implementation</p>
-<pre><code>typedef struct GlobalManager
-{
-    DiskManager disk;
-    BufferManager buffer;
-
-    /**
-    * These would be function pointers, to emulate object oriented. It could be independant functions.
-    * /
-    void create_table;
-    void insert_row;
-    void delete_row;
-    ...
-
-    void execute_query; // Call Parser just for parsing
-
-} GlobalManager;
-</code></pre>
+                <h1 id="aws-emr">AWS EMR</h1>
+<p>Amazon Web Services - Elastic Map Reduce is a web service that allows the user to setup a cloud cluster in order to perform MapReduce tasks. Nodes are automaticaly connected (either physicaly or logicaly), the operating system is installed and a big data framework is installed. This page details how to deploy a Hadoop Cluster on AWS in order to perform MapReduce algorithms.</p>
+<h2 id="creating-the-cluster">Creating the cluster</h2>
+<p>In the Elastic Map Reduce service (EMR), click the <code>create a cluster</code> button. There is only one page to choose the configuration.</p>
+<p>First, we need to configure the logical layer that runs on the cluster.</p>
+<p><img alt="Logical" src="../../resources/clusterconfiglogic.png" /></p>
+<ul>
+<li>Choose a name for the cluster</li>
+<li>Select the <code>cluster</code> mode</li>
+<li>Select the <code>Core Hadoop</code> logical layer</li>
+</ul>
+<blockquote>
+<p>We can see that other frameworks are available, but the basic Hadoop is enough for this project</p>
+</blockquote>
+<p><img alt="Physical" src="../../resources/clusterconfiginstances.png" /></p>
+<p>After selecting the logical layer, we need to choose the number and type of nodes to run in the cluster. The number of nodes should not be even but odd instead, in order to have a master.</p>
+<p>To get more informations about the AWS instances types, you get read <a href="https://aws.amazon.com/ec2/instance-types">this page</a></p>
+<h2 id="execution-the-algorithm">Execution the algorithm</h2>
+<p>When the cluster is up, you can run your algorithm by uploading Java code.</p>
+<ul>
+<li>Select the cluster you just created</li>
+<li>Go to the <code>Steps</code> page</li>
+<li>Click the <code>Add step</code> button</li>
+</ul>
+<p>You can now upload your Java code in the form of a <code>.jar</code> file. You can also specify arguments to add on the execution command</p>
+<p><img alt="Steps" src="../../resources/addstep.png" /></p>
+<blockquote>
+<p>When a step is added, you can run the algorithm on the cluster by clicking the <code>Run steps</code> button</p>
+</blockquote>
               
             </div>
           </div>
@@ -163,8 +179,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="../../relational/indexing/" class="btn btn-neutral float-right" title="Indexing">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-        <a href="../buffer/" class="btn btn-neutral" title="BufferManager"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+        <a href="../../hadoop/" class="btn btn-neutral" title="Hadoop"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -190,8 +208,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../buffer/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../hadoop/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../../relational/indexing/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
