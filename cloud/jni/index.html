@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Amazon Web Services - BQLDatabase</title>
+  <title>JNI - BQLDatabase</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Amazon Web Services";
-    var mkdocs_page_input_path = "cloud/aws.md";
-    var mkdocs_page_url = "/cloud/aws/";
+    var mkdocs_page_name = "JNI";
+    var mkdocs_page_input_path = "cloud/jni.md";
+    var mkdocs_page_url = "/cloud/jni/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -52,9 +52,23 @@
     <a class="" href="../..">Home</a>
 	    </li>
           
-            <li class="toctree-l1">
+            <li class="toctree-l1 current">
 		
-    <a class="" href="../jni/">JNI</a>
+    <a class="current" href="./">JNI</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#java-native-interface">Java Native Interface</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#how-to-use-it">How to use it</a></li>
+        
+            <li><a class="toctree-l3" href="#how-to-connect-to-the-hadoop-cloud-cluster">How to connect to the Hadoop cloud cluster</a></li>
+        
+        </ul>
+    
+
+    </ul>
 	    </li>
           
             <li class="toctree-l1">
@@ -67,25 +81,9 @@
     <a class="" href="../../hadoop/">Hadoop</a>
 	    </li>
           
-            <li class="toctree-l1 current">
+            <li class="toctree-l1">
 		
-    <a class="current" href="./">Amazon Web Services</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#aws-emr">AWS EMR</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#creating-the-cluster">Creating the cluster</a></li>
-        
-            <li><a class="toctree-l3" href="#execution-the-algorithm">Execution the algorithm</a></li>
-        
-            <li><a class="toctree-l3" href="#ssh-connection">SSH Connection</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../aws/">Amazon Web Services</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -140,7 +138,7 @@
     
       
     
-    <li>Amazon Web Services</li>
+    <li>JNI</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -150,37 +148,29 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="aws-emr">AWS EMR</h1>
-<p>Amazon Web Services - Elastic Map Reduce is a web service that allows the user to setup a cloud cluster in order to perform MapReduce tasks. Nodes are automaticaly connected (either physicaly or logicaly), the operating system is installed and a big data framework is installed. This page details how to deploy a Hadoop Cluster on AWS in order to perform MapReduce algorithms.</p>
-<h2 id="creating-the-cluster">Creating the cluster</h2>
-<p>In the Elastic Map Reduce service (EMR), click the <code>create a cluster</code> button. There is only one page to choose the configuration.</p>
-<p>First, we need to configure the logical layer that runs on the cluster.</p>
-<p><img alt="Logical" src="../../resources/clusterconfiglogic.png" /></p>
+                <h1 id="java-native-interface">Java Native Interface</h1>
+<p>The Java Native Interface exposes functions to call with a C program. It allows to extend it with Java programs. This is the solution to our need to communicate between the relational database (C language) and the Hadoop cluster, based on Java language.</p>
+<h2 id="how-to-use-it">How to use it</h2>
+<p>We have three functions to communicate with Java</p>
+<pre><code class="Java">JNIEnv* create_vm(JavaVM **jvm)
+void invoke_class(JNIEnv* env, char *str, int x)
+int requeteJNI(char *str)
+</code></pre>
+
+<p>We can see that we can access a pointer to a Java Virtual Machine. With this pointer, we can call Java classes and thus execute queries.</p>
+<h2 id="how-to-connect-to-the-hadoop-cloud-cluster">How to connect to the Hadoop cloud cluster</h2>
+<p>Choosing a Hadoop cluster to connect is done by specifying the correct URI in the Java class called <code>Hive</code>.</p>
+<pre><code class="Java">DriverManager.getConnection(&quot;jdbc:hive2://localhost:10000/default&quot;, &quot;hive&quot;, &quot;&quot;);
+</code></pre>
+
+<p>In order to execute the Hadoop cluster in the cloud, we need to open a SSH tunnel on our local machine.</p>
+<p>This can be achieve:</p>
 <ul>
-<li>Choose a name for the cluster</li>
-<li>Select the <code>cluster</code> mode</li>
-<li>Select the <code>Core Hadoop</code> logical layer</li>
+<li>Using a terminal</li>
+<li>Can be implemented in the DBMS</li>
 </ul>
-<blockquote>
-<p>We can see that other frameworks are available, but the basic Hadoop is enough for this project</p>
-</blockquote>
-<p><img alt="Physical" src="../../resources/clusterconfiginstances.png" /></p>
-<p>After selecting the logical layer, we need to choose the number and type of nodes to run in the cluster. The number of nodes should not be even but odd instead, in order to have a master.</p>
-<p>To get more informations about the AWS instances types, you get read <a href="https://aws.amazon.com/ec2/instance-types">this page</a></p>
-<h2 id="execution-the-algorithm">Execution the algorithm</h2>
-<p>When the cluster is up, you can run your algorithm by uploading Java code.</p>
-<ul>
-<li>Select the cluster you just created</li>
-<li>Go to the <code>Steps</code> page</li>
-<li>Click the <code>Add step</code> button</li>
-</ul>
-<p>You can now upload your Java code in the form of a <code>.jar</code> file. You can also specify arguments to add on the execution command</p>
-<p><img alt="Steps" src="../../resources/addstep.png" /></p>
-<blockquote>
-<p>When a step is added, you can run the algorithm on the cluster by clicking the <code>Run steps</code> button</p>
-</blockquote>
-<h2 id="ssh-connection">SSH Connection</h2>
-<p>Connecting to the master node of your cluster is detailed <a href="https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-ssh-tunnel.html">in this tutorial</a>. The idea is to get the host address in you AWS console (EMR service), and use a pair of SSH keys to authenticate your machine.</p>
+<p>This SSH tunnel will then use <strong>port forwarding</strong> to transfer the communications from <code>localhost:10000</code> to the cloud cluster on the same port. Thus, the Hadoop program will execute the process and return the result to our local machine.</p>
+<p><a href="../aws/">You can get more informations about SSH connection in the AWS section of this documentation</a></p>
               
             </div>
           </div>
@@ -188,10 +178,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../relational/indexing/" class="btn btn-neutral float-right" title="Indexing">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../" class="btn btn-neutral float-right" title="Cloud">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../hadoop/" class="btn btn-neutral" title="Hadoop"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../.." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -217,10 +207,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../hadoop/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../relational/indexing/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

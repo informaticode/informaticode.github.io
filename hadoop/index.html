@@ -54,6 +54,11 @@
           
             <li class="toctree-l1">
 		
+    <a class="" href="../cloud/jni/">JNI</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
     <a class="" href="../cloud/">Cloud</a>
 	    </li>
           
@@ -205,12 +210,10 @@ job.setReducerClass(NaiveBayesReducer.class);
 <p>Defining the I/O components. i.e how to read and write data. We can see that the method is chosen (Text), but the files are not yet defined.</p>
 <pre><code class="Java">job.setInputFormatClass(TextInputFormat.class);
 job.setOutputFormatClass(TextOutputFormat.class);
-````
+</code></pre>
 
-Finaly, we can select the proper files that contain the data to process. The first is the training set, the other is to write the final results.
-
-```Java
-FileInputFormat.addInputPath(job, new Path(args[0]));
+<p>Finaly, we can select the proper files that contain the data to process. The first is the training set, the other is to write the final results.</p>
+<pre><code class="Java">FileInputFormat.addInputPath(job, new Path(args[0]));
 FileOutputFormat.setOutputPath(job, new Path(args[1]));
 </code></pre>
 
