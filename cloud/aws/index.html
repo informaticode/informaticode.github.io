@@ -78,7 +78,9 @@
         
             <li><a class="toctree-l3" href="#creating-the-cluster">Creating the cluster</a></li>
         
-            <li><a class="toctree-l3" href="#execution-the-algorithm">Execution the algorithm</a></li>
+            <li><a class="toctree-l3" href="#executing-the-algorithm">Executing the algorithm</a></li>
+        
+            <li><a class="toctree-l3" href="#monitoring">Monitoring</a></li>
         
             <li><a class="toctree-l3" href="#ssh-connection">SSH Connection</a></li>
         
@@ -155,19 +157,23 @@
 <h2 id="creating-the-cluster">Creating the cluster</h2>
 <p>In the Elastic Map Reduce service (EMR), click the <code>create a cluster</code> button. There is only one page to choose the configuration.</p>
 <p>First, we need to configure the logical layer that runs on the cluster.</p>
-<p><img alt="Logical" src="../../resources/clusterconfiglogic.png" /></p>
 <ul>
 <li>Choose a name for the cluster</li>
 <li>Select the <code>cluster</code> mode</li>
 <li>Select the <code>Core Hadoop</code> logical layer</li>
 </ul>
+<p><img alt="Logical" src="../../resources/clusterconfiglogic.png" /></p>
 <blockquote>
 <p>We can see that other frameworks are available, but the basic Hadoop is enough for this project</p>
 </blockquote>
-<p><img alt="Physical" src="../../resources/clusterconfiginstances.png" /></p>
 <p>After selecting the logical layer, we need to choose the number and type of nodes to run in the cluster. The number of nodes should not be even but odd instead, in order to have a master.</p>
+<p><img alt="Physical" src="../../resources/clusterconfiginstances.png" /></p>
+<blockquote>
 <p>To get more informations about the AWS instances types, you get read <a href="https://aws.amazon.com/ec2/instance-types">this page</a></p>
-<h2 id="execution-the-algorithm">Execution the algorithm</h2>
+</blockquote>
+<p>Finaly, we need to create the cluster using a SSH key pair in order to connect to it later. <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html">Create the SSH key pair in the EC2 service.</a></p>
+<p><img alt="SSHkey" src="../../resources/sshkey.png" /></p>
+<h2 id="executing-the-algorithm">Executing the algorithm</h2>
 <p>When the cluster is up, you can run your algorithm by uploading Java code.</p>
 <ul>
 <li>Select the cluster you just created</li>
@@ -179,8 +185,18 @@
 <blockquote>
 <p>When a step is added, you can run the algorithm on the cluster by clicking the <code>Run steps</code> button</p>
 </blockquote>
+<h2 id="monitoring">Monitoring</h2>
+<p>When your cluster is running, you can use SSH port forwarding to access Hadoop websites that allow to detail the health and how is going the cluster. You can find how to access those interfaces <a href="https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-web-interfaces.html">in this tutorial.</a>. You'll need to open your SSH tunel before.</p>
+<p>For general informations about the cluster, Hadoop is displaying a simple interface about the nodes.</p>
+<p><img alt="" src="../../resources/hadoop.png" /></p>
+<p>If you need more specific informations about performances, <a href="http://ganglia.sourceforge.net/">Ganglia</a> is a good monitoring solutions installed on the cluster.</p>
+<p><img alt="" src="../../resources/ganglia.png" /></p>
+<p>Finaly, if you need to run custom queries and interact with the cluster via a simple interface, you can use <a href="http://gethue.com/">Hue</a>.</p>
+<p><img alt="" src="../../resources/hue.png" /></p>
 <h2 id="ssh-connection">SSH Connection</h2>
-<p>Connecting to the master node of your cluster is detailed <a href="https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-ssh-tunnel.html">in this tutorial</a>. The idea is to get the host address in you AWS console (EMR service), and use a pair of SSH keys to authenticate your machine.</p>
+<p>Using the cluster via the web interface is interesting for development, but is not the solution we need for the BQL project. Instead, we would like your local relational database to interact with the cluster via the internet?</p>
+<p>Connecting to the master node of your cluster is detailed <a href="https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-ssh-tunnel.html">in this tutorial</a>. The idea is to get the host address in your AWS console (EMR service), and use a pair of SSH keys to authenticate your machine. By creating a SSH tunnel to the master node, you can run the project and submit Hadoop jobs via port forwading.</p>
+<p>Then, you can <a href="../jni/">adapt the Hadoop cluster</a> in the <code>Hive</code> class in order to make the database interact with the remote Hadoop cluster.</p>
               
             </div>
           </div>
